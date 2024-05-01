@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login/Login";
-import Signup from "./Pages/Signup/Signup";
+import Auth from "./Pages/Login/Auth";
 import Logo from "./components/Logo/Logo";
 import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 import Reset from "./Pages/Reset/Reset";
 import Deposit from "./Pages/Deposit/Deposit";
 import Wallet from "./Pages/wallet/Wallet";
-import Games from "./Pages/Games/games";
+import Play from "./Chess/main";
 import Withdraw from "./Pages/Withdrawal/Withdrawal";
-import Verification from "./Pages/Verification/verify";
-import { AuthProvider } from "./components/AuthContext";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
+
+
 
 
 function App() {
@@ -28,27 +27,17 @@ function App() {
     };
 
     return (
-        <AuthProvider>
+        <>
             <Router>
                 <Logo />
                 <Routes>
-                    <Route path="login" element={<Login />} />
+                    <Route path="Auth" element={<Auth />} />
                 </Routes>
                 <Routes>
                     <Route path="/">
                         <Route index element={<Home />} />
 
-                        <Route path="signup" element={<Signup />} />
-                        <Route
-                            path="dashboard"
-                            element={
-                                <Home
-                                    showSidebar={showSidebar}
-                                    closeSidebar={closeSidebar}
-                                    active={active}
-                                />
-                            }
-                        />
+
                         <Route
                             path="profile"
                             element={
@@ -80,32 +69,31 @@ function App() {
                             }
                         />
                         <Route
+                            path="dashboard"
+                            element={
+                                <Home
+                                    showSidebar={showSidebar}
+                                    closeSidebar={closeSidebar}
+                                    active={active}
+                                />
+                            }
+                        />
+
+                        <Route
+                            path="play"
+                            element={
+                                <Play
+                                    showSidebar={showSidebar}
+                                    closeSidebar={closeSidebar}
+                                    active={active}
+                                />
+                            }
+                        />
+
+                        <Route
                             path="wallets"
                             element={
                                 <Wallet
-                                    showSidebar={showSidebar}
-                                    closeSidebar={closeSidebar}
-                                    active={active}
-                                />
-                            }
-                        />
-
-                        <Route
-                            path="verify"
-                            element={
-                                <Verification
-                                    showSidebar={showSidebar}
-                                    closeSidebar={closeSidebar}
-                                    active={active}
-                                />
-                            }
-                        />
-
-
-                        <Route
-                            path="games"
-                            element={
-                                <Games
                                     showSidebar={showSidebar}
                                     closeSidebar={closeSidebar}
                                     active={active}
@@ -129,8 +117,8 @@ function App() {
                 </Routes>
             </Router>
             <Analytics />
-           < SpeedInsights/>
-        </AuthProvider>
+            < SpeedInsights />
+        </>
     );
 }
 

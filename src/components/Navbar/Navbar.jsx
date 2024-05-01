@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { SiAmazongames } from "react-icons/si";
-import { Link } from "react-router-dom";
-import Login from "../../Pages/Login/Login";
+import Auth from "../../Pages/Login/Auth";
+import Create from "../../Pages/Games/create";
+import Error from "../../Pages/ErrorModal/ErrorModal";
 import "./Navbar.scss";
 
 const Navbar = ({ showSidebar }) => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const apiKey = process.env.REACT_APP_SERVER;
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [errorModalOpen , setErrorModalOpen] = useState(false);
+  const [errorMessage , setErrorMessage] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,7 +25,7 @@ const Navbar = ({ showSidebar }) => {
   const fetchUserData = (token) => {
     setLoading(true);
     axios
-      .get(`${apiKey}/balance`, {
+      .get('http://localhost:3001/users/balance', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -35,7 +37,9 @@ const Navbar = ({ showSidebar }) => {
         }
       })
       .catch((error) => {
-        // Handle error
+        setErrorMessage(`${error.message} ,  Check Yourinternet connection`);
+        setErrorModalOpen(true);
+      
       })
       .finally(() => {
         setLoading(false);
@@ -55,7 +59,7 @@ const Navbar = ({ showSidebar }) => {
         <ul className="games_filter">
           <li>
             <div className="balance">
-              <h6>Spinz4bets</h6>
+              <h6>Chess929</h6>
               {loading ? "Loading..." : (
                 userData.balance ? `${getCurrencySymbol()}${userData.balance}` : 
                 <button  className="form_btn" onClick={() => setLoginModalOpen(true)}>Login</button>
@@ -64,14 +68,16 @@ const Navbar = ({ showSidebar }) => {
           </li>
         </ul>
 
-        <Link className="link" to="/profile">
-          <SiAmazongames className="icon" />
-          <span>Games</span>
-        </Link>
-      </header>
+        <div className="tournament">
 
+        <div className="torn_name" >Create Game</div>
+        <button  className="torn_btn" onClick={() => setCreateModalOpen(true)}>+</button>
+        </div>
+      </header>
+      {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />}
     
-      {loginModalOpen && <Login isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
+      {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
+      {errorModalOpen && <Error errorMessage = {errorMessage} isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)} />}
     </>
   );
 };

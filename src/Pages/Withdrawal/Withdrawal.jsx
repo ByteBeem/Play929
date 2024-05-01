@@ -9,67 +9,34 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
   const [account, setAccount] = useState("");
   const [bank, setBank] = useState("");
   const [iD, setiD] = useState("");
-  const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [Currentbalance, setCurrentBalance] = useState("0.00");
-
   const token = localStorage.getItem("token");
+  const [csrfToken ,setcsrfToken ] = useState('');
+  
 
-  const fetchBalance = async () => {
-    try {
-   
-      const response = await axios.get(
-        "https://spinzserver-e34cd148765a.herokuapp.com/balance",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  useEffect (() => {
 
-      if (response.status === 206) {
-        alert("Token Expired Login again!");
-      } else {
-        setCurrentBalance(response.data.balance);
-      }
-    } catch (error) {
-      console.error("Error fetching balance:", error);
-    } finally {
+   axios.get("http://localhost:3001/auth/csrfToken" ,  {
+
+    headers : {
+      Authorization : `Bearer ${token}`
     }
-  };
+    }) .then((response) =>{
+      const csrfToken = response.data;
+      setcsrfToken(csrfToken);
 
-  useEffect(() => {
-    fetchBalance();
-  }, [token]);
+    })
 
-  useEffect(() => {
-   
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get("https://spinzserver-e34cd148765a.herokuapp.com/balance", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setBalance(response.data.balance);
-          setCurrentBalance(response.data.balance);
-        })
-        .catch((error) => {
-          console.error("Error fetching balance:", error);
-        });
-    }
-  }, []);
-
+  },[token]);
+ 
   const handleWithdraw = () => {
     setError("");
     setMessage("");
     setLoading(true);
 
-    const token = localStorage.getItem("token");
+    
 
     if (isNaN(amount) || amount <= 0) {
       setError("Invalid withdrawal amount");
@@ -93,7 +60,10 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
 
     axios
       .post("https://spinzserver-e34cd148765a.herokuapp.com/withdraw", requestBody, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` ,
+        csrfToken : `UsercsrfToken ${setcsrfToken}`
+      
+      },
       })
       .then((response) => {
         setMessage(

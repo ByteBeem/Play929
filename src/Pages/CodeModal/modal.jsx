@@ -21,7 +21,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await axios.post(
-        "https://spinzserver-e34cd148765a.herokuapp.com/confirm-otp",
+        "http://localhost:3001/auth/confirm-otp",
         { code, email }
       );
 
@@ -32,7 +32,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
 
       } else if (response.status === 200) {
         localStorage.setItem("token" , response.data.token);
-        window.location.href = "https://www.spinz4bets.co.za";
+        window.location.href = "http://localhost:3000";
 
 
 
@@ -73,7 +73,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
             }
           </button>
           {message && <p className="success-message">{message}</p>}
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="error-message">{error}</p>}    
         </div>
 
       </div>

@@ -50,15 +50,16 @@ function Reset({ showSidebar, active, closeSidebar }) {
     };
 
     try {
-      const response = await axios.post("https://spinzserver-e34cd148765a.herokuapp.com/changePassword", requestBody);
+      const response = await axios.post("http://localhost:3001/auth/changePassword", requestBody);
       
       if (response.status === 200) {
         setMessage("Password changed successfully.");
-      } else {
-        setError(response.data.message || "An error occurred while resetting the password.");
-      }
+      } 
     } catch (error) {
-      setError("An error occurred while resetting the password.");
+      if (error.response && error.response.data && error.response.data.error) {
+        
+        setError(error.response.data.error);
+      }
     } finally {
       setIsLoading(false);
     }

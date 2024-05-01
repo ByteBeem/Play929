@@ -31,7 +31,7 @@ const Sidebar = ({ active, closeSidebar }) => {
         </div>
       )}
       <div className="top">
-        <h3>Spinz4bets</h3>
+        <h3>Chess929</h3>
         <div className="close_btn">&times;</div>
       </div>
 

@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import axios from "axios";
-import Slider from "react-slick";
-import Games from "../../Data/Games";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import "./Home.scss";
+import image from "../../assets/logo.jpg";
 
 class Home extends Component {
   constructor(props) {
@@ -15,90 +11,31 @@ class Home extends Component {
     this.state = {
       loading: false,
       betAmountInput: "",
+      numberOfCards: 10,
+      maxContainerHeight: window.innerHeight - 100
     };
 
-  
     this.token = localStorage.getItem('token');
-    this.settings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 1, 
-    };
   }
 
-  handlePlayClick = async (id) => {
-    const storedToken = localStorage.getItem("token");
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
 
-    if (id === 2) {
-      const userBetAmount = prompt("Enter your bet amount:");
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
 
-      if (!userBetAmount || isNaN(parseFloat(userBetAmount)) || parseFloat(userBetAmount) <= 0) {
-        alert("Invalid bet amount. Please enter a valid bet amount.");
-        return;
-      }
-
-      this.setState({ betAmountInput: userBetAmount });
-    }
-
-    this.setState({ loading: true });
-
-    try {
-      const headers = { Authorization: `Bearer ${storedToken}` };
-
-      switch (id) {
-        case 1:
-        case 2:
-        case 5:
-        case 7:
-          const response = await axios.post(
-            `https://spinzserver-e34cd148765a.herokuapp.com/${this.getGamePath(id)}`,
-            this.getGameData(id),
-            { headers }
-          );
-          if (response.status === 400) {
-            alert("Insufficient Balance");
-          } else {
-            window.location.href = response.data.gameLink;
-          }
-          break;
-
-        case 4:
-        case 6:
-          window.location.href = "https://tac-game.vercel.app/";
-          break;
-
-        default:
-          console.log("Unknown game id");
-      }
-    } catch (error) {
-      alert("Something went wrong , try again later");
-    } finally {
-      this.setState({ loading: false });
-    }
-  };
-
-  getGamePath = (id) => {
-    const paths = {
-      1: "slot",
-      2: "startGame",
-      5: "dice",
-      7: "wheel",
-    };
-    return paths[id] || "";
-  };
-
-  getGameData = (id) => {
-    if (id === 2) {
-      return { betAmount: this.state.betAmountInput };
-    }
-    return {};
-  };
+  handleResize = () => {
+    this.setState({ maxContainerHeight: window.innerHeight - 100 });
+  }
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const { loading } = this.state;
+    const { loading, numberOfCards, maxContainerHeight } = this.state;
+    const hasToken = this.token;
+
+    const cards = Array.from({ length: numberOfCards }, (_, index) => index);
 
     return (
       <div className="home">
@@ -107,21 +44,24 @@ class Home extends Component {
           <Navbar showSidebar={showSidebar} />
           <div className="content">
             <div className="games_slider">
-              <div className="div">
-                <Slider {...this.settings}>
-                  {Games.map(({ id, title, img }) => (
-                    <div key={id} className="game_box">
-                      <img src={img} alt="" className="game_img" />
-                      <div className="title">{title}</div>
-                      <div
-                        className="form_btn"
-                        onClick={() => this.handlePlayClick(id)}
-                      >
-                        {loading ? "Loading..." : "Play"}
+              <div className="scrollview" style={{ maxHeight: maxContainerHeight }}>
+                <div className="card_container">
+                  {cards.map((cardIndex) => (
+                    <div key={cardIndex} className="card">
+                      <img src={image} alt={`Card ${cardIndex + 1}`} />
+                      <div className="tournament_info">
+                        <h3>Tournament Name</h3>
+                        <button 
+                          className={`join_button ${hasToken ? "disabled" : ""}`}
+                          disabled={hasToken} 
+                          aria-busy={hasToken} 
+                        >
+                          Join
+                        </button>
                       </div>
                     </div>
                   ))}
-                </Slider>
+                </div>
               </div>
             </div>
           </div>

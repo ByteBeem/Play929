@@ -1,0 +1,179 @@
+.create-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+  }
+  
+  .create-close-button {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 28px; 
+    color: #ff0000; 
+    padding-left: 25px;
+    padding: 10px;
+  }
+
+  button {
+    padding: 10px;
+    width: 48%;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .form_btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+ 
+
+  .or_text{
+    padding-left : 40%;
+  }
+
+  .dropdown {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  
+  .error-input {
+    border: 1px solid red;
+  }
+  
+  .valid-input {
+    border: 1px solid green;
+  }
+  
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  
+  
+  .error-message{
+    color: red;
+  }
+  .typing {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  :root {
+    --primary-color: rgb(157, 0, 255);
+  
+    --box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  }
+  
+  .login {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .login_container {
+      background: white;
+      box-shadow: var(--box-shadow);
+      padding: 2rem;
+      border-radius: 5px;
+      width: 35%;
+  
+      label {
+        margin: 5px 0;
+        text-transform: capitalize;
+        font-size: 17px;
+        color: var(--primary-color);
+      }
+  
+      input {
+        outline: 0;
+        border: 2px solid gray;
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        padding: 15px;
+        font-size: 15px;
+      }
+  
+      .form_btn {
+        width: 100%;
+        border-radius: 5px;
+        color: white;
+        background: var(--primary-color);
+        margin-bottom: 2rem;
+      }
+      .form_btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+  
+      .bottom {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+  
+        span {
+          margin-bottom: 1rem;
+  
+          .link {
+            color: var(--primary-color);
+  
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+  
+    @media screen and (max-width: 1200px) {
+      .login_container {
+        width: 60%;
+        padding: 1rem;
+      }
+    }
+  
+    @media screen and (max-width: 700px) {
+      .login_container {
+        width: 90%;
+        padding: 1rem;
+      }
+    }
+  }
+  
