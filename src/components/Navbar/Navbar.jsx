@@ -14,7 +14,7 @@ const Navbar = ({ showSidebar }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const userEmail = localStorage.getItem("userEmail");
 
-  const ws = new WebSocket('ws:play929-1e88617fc658.herokuapp.com:8080');
+  const ws = new WebSocket('ws:https://play929-1e88617fc658.herokuapp.com');
   ws.onopen = () => {
     ws.send(JSON.stringify({ userId: userEmail }));
   };
