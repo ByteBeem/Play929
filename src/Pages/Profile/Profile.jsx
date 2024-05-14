@@ -14,25 +14,33 @@ import { FiLoader } from "react-icons/fi";
 
 function Profile({ showSidebar, active, closeSidebar }) {
   const [userData, setUserData] = useState({});
-  const [loginModalOpen , setLoginModalOpen] =useState(false);
-  const [errorModalOpen , setErrorModalOpen] =useState(false);
-  const [errorMessage , setErrorMessage] = useState('');
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [Dates, setDates] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const fullName = userData.name;
   const surname = userData.surname;
 
+  const dummyData = [
+    { date: new Date(), type: "WIthdrawal", amount: "$50" },
+    { date: new Date(), type: "Deposit", amount: "$100" },
+    { date: new Date(), type: "Deposit", amount: "$30" },
+    { date: new Date(), type: "Withdrawal", amount: "$80" },
+  ];
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      
+
       fetchUserData(token);
     }
     else {
       setLoginModalOpen(true);
-      
+
     };
 
   }, []);
@@ -41,7 +49,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://play929-1e88617fc658.herokuapp.com/activities",
+        "https://play929-1e88617fc658.herokuapp.com/users/activities",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -74,8 +82,8 @@ function Profile({ showSidebar, active, closeSidebar }) {
       })
       .catch((error) => {
 
-       setErrorMessage(error.message);
-       setErrorModalOpen(true);
+        setErrorMessage(error.message);
+        setErrorModalOpen(true);
       })
       .finally(() => {
         setLoading(false);
@@ -108,7 +116,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
               <span>Surname:</span>
               <div className="text_item">{surname}</div>
 
-              
+
             </div>
           </div>
         </div>
@@ -116,10 +124,32 @@ function Profile({ showSidebar, active, closeSidebar }) {
         <Link className="form_btn" to="/reset">
           Change Password
         </Link>
-        
+        <div className="activity_table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dummyData.map((data, index) => (
+                <tr key={index}>
+                  <td>{data.date.toDateString()}</td>
+                  <td>{data.type}</td>
+                  <td>{data.amount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
       </div>
-      {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} /> }
-      {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={()=> setErrorModalOpen(false)} />}
+
+
+      {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
+      {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)} />}
 
     </div>
   );
