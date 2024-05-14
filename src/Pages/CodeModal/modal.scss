@@ -10,7 +10,7 @@
     align-items: center;
   }
 
-  .form_btn:disabled {
+  .ok-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
@@ -54,6 +54,14 @@
   }
   
   input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  input[type="password"] {
     width: 100%;
     padding: 10px;
     font-size: 16px;

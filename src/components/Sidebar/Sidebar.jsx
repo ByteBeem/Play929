@@ -20,7 +20,7 @@ const Sidebar = ({ active, closeSidebar }) => {
       setLoading(false);
       window.location.href = "";
       closeSidebar();
-    }, 3000);
+    }, 2000);
   };
   return (
     <aside className={`sidebar ${active}`}>
@@ -31,7 +31,7 @@ const Sidebar = ({ active, closeSidebar }) => {
         </div>
       )}
       <div className="top">
-        <h3>Chess929</h3>
+        <h3>Play929</h3>
         <div className="close_btn">&times;</div>
       </div>
 

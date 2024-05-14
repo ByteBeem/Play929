@@ -24,6 +24,16 @@
       justify-content: center;
       
     }
+    .no-games-message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      font-family: 'Roboto', sans-serif; 
+      font-size: 18px;
+      color: #555; 
+    }
+    
     
     .card {
       margin: 10px;

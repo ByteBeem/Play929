@@ -27,7 +27,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetchActivities(token);
+      
       fetchUserData(token);
     }
     else {

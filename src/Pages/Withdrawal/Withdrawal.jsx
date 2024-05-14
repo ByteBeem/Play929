@@ -8,35 +8,31 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
   const [amount, setAmount] = useState("");
   const [account, setAccount] = useState("");
   const [bank, setBank] = useState("");
-  const [iD, setiD] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const token = localStorage.getItem("token");
-  const [csrfToken ,setcsrfToken ] = useState('');
-  
+  const [csrfToken, setCsrfToken] = useState("");
 
-  useEffect (() => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/csrfToken", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        const csrfToken = response.data.csrfToken;
+        
+        setCsrfToken(csrfToken);
+      });
+  }, [token]);
 
-   axios.get("http://localhost:3001/auth/csrfToken" ,  {
-
-    headers : {
-      Authorization : `Bearer ${token}`
-    }
-    }) .then((response) =>{
-      const csrfToken = response.data;
-      setcsrfToken(csrfToken);
-
-    })
-
-  },[token]);
- 
   const handleWithdraw = () => {
     setError("");
     setMessage("");
     setLoading(true);
-
-    
 
     if (isNaN(amount) || amount <= 0) {
       setError("Invalid withdrawal amount");
@@ -44,26 +40,25 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
       return;
     }
 
-    if (!iD) {
+    if (!password) {
       setError("Enter password");
       setLoading(false);
       return;
     }
-    
 
     const requestBody = {
       amount: parseFloat(amount),
-      Account: account,
+      account: account,
       bank: bank,
-      password: iD,
+      password: password 
     };
 
     axios
-      .post("https://spinzserver-e34cd148765a.herokuapp.com/withdraw", requestBody, {
-        headers: { Authorization: `Bearer ${token}` ,
-        csrfToken : `UsercsrfToken ${setcsrfToken}`
-      
-      },
+      .post("http://localhost:3001/wallet/withdraw", requestBody, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-CSRF-Token": csrfToken
+        }
       })
       .then((response) => {
         setMessage(
@@ -72,10 +67,10 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
         setAmount("");
         setAccount("");
         setBank("");
-        setiD("");
+        setPassword("");
       })
       .catch((error) => {
-        setError("Withdrawal failed. " + error.response.data.error);
+        setError( error.response.data.error);
       })
       .finally(() => {
         setLoading(false);
@@ -85,12 +80,9 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
   return (
     <div className="withdraw">
       <Sidebar active={active} closeSidebar={closeSidebar} />
-
       <div className="withdraw_container">
         <Navbar showSidebar={showSidebar} />
-
         <div className="content">
-
           <div className="middle">
             <div className="left">
               <h3>Withdraw Funds</h3>
@@ -104,7 +96,6 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                   inputMode="numeric"
                 />
               </div>
-
               <div>
                 <label>Account Number</label>
                 <br />
@@ -115,15 +106,14 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                   inputMode="numeric"
                 />
               </div>
-
               <div>
                 <label>Password</label>
                 <br />
-                <input 
-                type="text"
-                value={iD}
-                onChange={(e) => setiD(e.target.value)}
-                inputMode="text"
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  inputMode="text"
                 />
               </div>
             </div>
@@ -143,7 +133,6 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                   <option value="Absa">Absa</option>
                 </select>
               </div>
-
               <button
                 className="form_btn"
                 onClick={handleWithdraw}
@@ -151,7 +140,6 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
               >
                 {loading ? "Processing..." : "Withdraw"}
               </button>
-
               {message && <p className="success-message">{message}</p>}
               {error && <p className="error-message">{error}</p>}
             </div>
