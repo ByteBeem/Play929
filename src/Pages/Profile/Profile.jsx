@@ -41,7 +41,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://spinzserver-e34cd148765a.herokuapp.com/activities",
+        "https://play929-1e88617fc658.herokuapp.com/activities",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -63,7 +63,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
   const fetchUserData = (token) => {
     setLoading(true);
     axios
-      .get("http://localhost:3001/users/getUserData", {
+      .get("https://play929-1e88617fc658.herokuapp.com/users/getUserData", {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -43,7 +43,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/confirmReset-otp",
+        "https://play929-1e88617fc658.herokuapp.com/auth/confirmReset-otp",
         { code, email }
       );
 
@@ -80,7 +80,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
       }
   
       const response = await axios.post(
-        "http://localhost:3001/auth/updatePassword",
+        "https://play929-1e88617fc658.herokuapp.com/auth/updatePassword",
         { email, newPassword }
       );
   

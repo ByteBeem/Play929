@@ -21,7 +21,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/confirm-otp",
+        "https://play929-1e88617fc658.herokuapp.com/auth/confirm-otp",
         { code, email }
       );
 
@@ -32,7 +32,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
 
       } else if (response.status === 200) {
         localStorage.setItem("token" , response.data.token);
-        window.location.href = "http://localhost:3000";
+        window.location.href = "https://play929.vercel.app";
 
 
 

@@ -50,7 +50,7 @@ function Reset({ showSidebar, active, closeSidebar }) {
     };
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/changePassword", requestBody);
+      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/changePassword", requestBody);
       
       if (response.status === 200) {
         setMessage("Password changed successfully.");

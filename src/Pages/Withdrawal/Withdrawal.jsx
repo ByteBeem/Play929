@@ -17,7 +17,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/csrfToken", {
+      .get("https://play929-1e88617fc658.herokuapp.com/auth/csrfToken", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -54,7 +54,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
     };
 
     axios
-      .post("http://localhost:3001/wallet/withdraw", requestBody, {
+      .post("https://play929-1e88617fc658.herokuapp.com/wallet/withdraw", requestBody, {
         headers: {
           Authorization: `Bearer ${token}`,
           "X-CSRF-Token": csrfToken
