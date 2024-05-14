@@ -23,7 +23,7 @@ const Create = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/games/csrfToken", {
+      .get("https://play929-1e88617fc658.herokuapp.com/games/csrfToken", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -39,7 +39,7 @@ const Create = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.get("http://localhost:3001/games/Onlineplayers", {
+      const response = await axios.get("https://play929-1e88617fc658.herokuapp.com/games/Onlineplayers", {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -84,7 +84,7 @@ const Create = ({ isOpen, onClose }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:3001/games/one-vs-one",
+        "https://play929-1e88617fc658.herokuapp.com/games/one-vs-one",
         payload,
         {
           headers: {
@@ -129,7 +129,7 @@ const Create = ({ isOpen, onClose }) => {
         };
       }
 
-      const response = await axios.post("http://localhost:3001/games/tournament", payload, {
+      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/games/tournament", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
