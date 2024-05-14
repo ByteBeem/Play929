@@ -56,9 +56,7 @@ class Home extends Component {
             console.log("Mode:", game.mode);
             console.log("Stake Amount:", game.stakeAmount);
             console.log("Type:", game.type);
-            console.log("Creator:", game.creator);
-            console.log("Black Player Link:", game.blackPlayerLink);
-            console.log("White Player Link:", game.whitePlayerLink);
+            
           });
         }
         
@@ -111,19 +109,14 @@ class Home extends Component {
                         <img src={image} alt={`Card ${index + 1}`} />
                         <div className="tournament_info">
                           <h3>{game.type}</h3>
-                          <p>Type: {game.mode}</p>
-                          <p style={{ color: game.state === "won" ? "green" : "red" }}>
-                            State: {game.state}
-                          </p>
+                          <p>Type: {game.stakeAmount} {game.mode}</p>
+                          
                           {game.state === "won" ? (
                             <p style={{ color: "green" }}>You won!</p>
                           ) : (
-                            <p style={{ color: "red" }}>You lost!</p>
+                            <p style={{ color: "green" }}>Played!</p>
                           )}
-                          {/* Remove the condition to hide the join button */}
-                          {/* {!hasToken || game.state === "won" ? null : (
-                            <button className="join_button">Join</button>
-                          )} */}
+                          
                         </div>
                       </div>
                     ))
