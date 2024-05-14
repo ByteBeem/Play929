@@ -17,6 +17,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [activities, setActivities] = useState([]);
   const [Dates, setDates] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
     if (token) {
 
       fetchUserData(token);
+      fetchActivities(token);
     }
     else {
       setLoginModalOpen(true);
@@ -59,6 +61,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
       setDates(
         response.data.map((activity) => new Date(activity.date_time))
       );
+      setActivities(response.data)
     } catch (error) {
 
       setErrorMessage(error.message);
@@ -129,16 +132,16 @@ function Profile({ showSidebar, active, closeSidebar }) {
             <thead>
               <tr>
                 <th>Date</th>
+                <th>Details</th>
                 <th>Type</th>
-                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {dummyData.map((data, index) => (
+              {activities.map((activity, index) => (
                 <tr key={index}>
-                  <td>{data.date.toDateString()}</td>
-                  <td>{data.type}</td>
-                  <td>{data.amount}</td>
+                  <td>{new Date(activity.Date).toDateString()}</td>
+                  <td>{activity.Details}</td>
+                  <td>{activity.Type}</td>
                 </tr>
               ))}
             </tbody>
