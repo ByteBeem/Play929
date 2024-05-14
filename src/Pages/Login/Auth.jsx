@@ -87,7 +87,7 @@ const Login = ({ isOpen, onClose }) => {
     localStorage.setItem("email", email);
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/signup", {
+      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/signup", {
         full,
         surname,
         country,
@@ -161,7 +161,7 @@ const Login = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
+      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/login", {
         email,
         password,
         token: recaptcha,
@@ -245,7 +245,7 @@ const Login = ({ isOpen, onClose }) => {
     setIsResetLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/resetPassword", {
+      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/resetPassword", {
         email,
         token : recaptcha,
       });
