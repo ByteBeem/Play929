@@ -58,10 +58,9 @@ function Profile({ showSidebar, active, closeSidebar }) {
           }
         }
       );
-      setDates(
-        response.data.map((activity) => new Date(activity.date_time))
-      );
-      setActivities(response.data)
+      
+      const activitiesData = [response.data]; 
+      setActivities(activitiesData);
     } catch (error) {
 
       setErrorMessage(error.message);
