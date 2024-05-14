@@ -44,7 +44,7 @@ class Home extends Component {
     }
 
     try {
-      const response = await axios.get('http://localhost:3001/users/old', {
+      const response = await axios.get('https://play929-1e88617fc658.herokuapp.com/users/old', {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
@@ -74,7 +74,7 @@ class Home extends Component {
     }
   
     try {
-      const response = await axios.get('http://localhost:3001/users/email', {
+      const response = await axios.get('https://play929-1e88617fc658.herokuapp.com/users/email', {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
