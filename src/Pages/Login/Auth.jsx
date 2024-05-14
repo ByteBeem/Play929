@@ -169,7 +169,7 @@ const Login = ({ isOpen, onClose }) => {
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        window.location.href = "http://localhost:3000";
+        window.location.href = "https://play929.vercel.app";
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
