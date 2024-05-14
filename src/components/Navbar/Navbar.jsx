@@ -14,7 +14,7 @@ const Navbar = ({ showSidebar }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const userEmail = localStorage.getItem("userEmail");
 
-  const ws = new WebSocket('ws://localhost:8080');
+  const ws = new WebSocket('ws:play929-1e88617fc658.herokuapp.com:8080');
   ws.onopen = () => {
     ws.send(JSON.stringify({ userId: userEmail }));
   };
@@ -46,7 +46,7 @@ const Navbar = ({ showSidebar }) => {
   const fetchUserData = (token) => {
     setLoading(true);
     axios
-      .get('http://localhost:3001/users/balance', {
+      .get('https://play929-1e88617fc658.herokuapp.com/users/balance', {
         headers: {
           Authorization: `Bearer ${token}`
         }
