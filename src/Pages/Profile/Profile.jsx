@@ -60,7 +60,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
       );
       
       
-      setActivities(activitiesData);
+      setActivities(response.data);
     } catch (error) {
 
       setErrorMessage(error.message);
