@@ -59,7 +59,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
         }
       );
       
-      const activitiesData = [response.data]; 
+      
       setActivities(activitiesData);
     } catch (error) {
 
