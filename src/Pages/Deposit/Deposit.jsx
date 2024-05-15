@@ -51,7 +51,7 @@ class Deposit extends Component {
     }
 
     const requestBody = {
-      amount: parseFloat(amount) ,
+      amount: parseFloat(amount),
     };
 
     axios
@@ -59,10 +59,11 @@ class Deposit extends Component {
         "https://play929-1e88617fc658.herokuapp.com/wallet/deposit",
         requestBody,
         {
-          headers: { Authorization: `Bearer ${this.token}` ,
-          
-        
-        },
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+
+
+          },
         }
       )
       .then((response) => {
@@ -93,7 +94,7 @@ class Deposit extends Component {
             <div className="middle">
               <div className="deposit_form">
                 <h2>
-                  <b>Secure Method :</b>{" "}
+                  <b>Payfast Method :</b>{" "}
                 </h2>
                 <div>
                   <label>Deposit Amount</label>
@@ -116,11 +117,15 @@ class Deposit extends Component {
                   {this.state.loading ? "Processing..." : "Make Payment"}
                 </button>
               </div>
-              
+
               <div className="footer">
-                <p>Deposits are processed securely and swiftly.</p>
-                <p>Your financial information is kept safe at all times.</p>
+                <p>Deposits are processed securely and swiftly using trusted payment gateways like PayFast and Yoco.</p>
+                <p>We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.</p>
+                <p>Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.</p>
+                <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
+                <p>© 2024 Play929. All rights reserved.</p>
               </div>
+
             </div>
           </div>
         </div>

@@ -13,10 +13,10 @@ class Home extends Component {
     this.state = {
       errorMessage: "",
       errorModalOpen: false,
-      prevGames: [], 
+      prevGames: [],
       loading: false,
       betAmountInput: "",
-      userEmail : "",
+      userEmail: "",
       numberOfCards: 10,
       maxContainerHeight: window.innerHeight - 100
     };
@@ -26,7 +26,7 @@ class Home extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    this.fetchPrevGames(); 
+    this.fetchPrevGames();
     this.fetchUserEmail();
   }
 
@@ -49,20 +49,20 @@ class Home extends Component {
           Authorization: `Bearer ${this.token}`
         }
       });
-   
-        if (response.status === 200) {
-          this.setState({ prevGames: response.data.prevGames });
-          this.state.prevGames.forEach(game => {
-            console.log("Mode:", game.mode);
-            console.log("Stake Amount:", game.stakeAmount);
-            console.log("Type:", game.type);
-            
-          });
-        }
-        
+
+      if (response.status === 200) {
+        this.setState({ prevGames: response.data.prevGames });
+        this.state.prevGames.forEach(game => {
+          console.log("Mode:", game.mode);
+          console.log("Stake Amount:", game.stakeAmount);
+          console.log("Type:", game.type);
+
+        });
+      }
+
 
     } catch (error) {
-      
+
     }
   }
 
@@ -70,22 +70,22 @@ class Home extends Component {
     if (!this.token) {
       return;
     }
-  
+
     try {
       const response = await axios.get('https://play929-1e88617fc658.herokuapp.com/users/email', {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
       });
-  
+
       if (response.status === 200) {
         const userEmail = response.data.userEmail;
         console.log(userEmail);
-        localStorage.setItem('userEmail', userEmail); 
+        localStorage.setItem('userEmail', userEmail);
         this.setState({ userEmail });
       }
     } catch (error) {
-    
+
     }
   }
 
@@ -110,19 +110,21 @@ class Home extends Component {
                         <div className="tournament_info">
                           <h3>{game.type}</h3>
                           <p>Type: {game.stakeAmount} {game.mode}</p>
-                          
+
                           {game.state === "won" ? (
                             <p style={{ color: "green" }}>You won!</p>
                           ) : (
-                            <p style={{ color: "green" }}>Played!</p>
+                            <p style={{ color: "green" }}>In progess!</p>
                           )}
-                          
+
+                          <button className="watch-button" >Watch</button>
+
                         </div>
                       </div>
                     ))
                   ) : (
                     <div className="no-games-message">
-                      <p>No Previous games found. Start creating now and play!</p>
+                      <p>No games found. Start creating now and play!</p>
                     </div>
                   )}
                 </div>
@@ -134,5 +136,5 @@ class Home extends Component {
       </div>
     );
   }
-}    
+}
 export default Home;
