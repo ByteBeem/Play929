@@ -4,14 +4,13 @@ import "./Deposit.scss";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 
-
-
 class Deposit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       amount: "",
+      csrfToken: "",
       loading: false,
       message: "",
       error: "",
@@ -23,11 +22,14 @@ class Deposit extends Component {
     this.idClient = localStorage.getItem("idclient");
   }
 
-  handleDepositPayStack = () => {
+  handleDeposit = () => {
     this.setState({ error: "", message: "", loading: true });
 
     if (!this.token) {
-      this.setState({ error: "Token not found, please log in again.", loading: false });
+      this.setState({
+        error: "Token not found, please log in again.",
+        loading: false,
+      });
       return;
     }
 
@@ -49,20 +51,24 @@ class Deposit extends Component {
     }
 
     const requestBody = {
-      amount: parseFloat(amount) * 100,
-      email: 'bettingusers@spinz4bets.com',
-      token: this.token,
+      amount: parseFloat(amount) ,
     };
 
     axios
-      .post("https://spinzserver-e34cd148765a.herokuapp.com/pay", requestBody, {
-        headers: { Authorization: `Bearer ${this.token}` },
-      })
+      .post(
+        "https://play929-1e88617fc658.herokuapp.com/wallet/deposit",
+        requestBody,
+        {
+          headers: { Authorization: `Bearer ${this.token}` ,
+          
+        
+        },
+        }
+      )
       .then((response) => {
         this.setState({ message: `Redirecting...` });
 
-
-        window.location.href = response.data.data.authorization_url;
+        window.location.href = response.data.url;
         this.setState({ amount: "" });
       })
       .catch((error) => {
@@ -74,12 +80,9 @@ class Deposit extends Component {
   };
 
 
-
-
   render() {
     const { amount, message, error } = this.state;
     const { showSidebar, active, closeSidebar } = this.props;
-
 
     return (
       <div className="deposit">
@@ -89,7 +92,9 @@ class Deposit extends Component {
           <div className="content">
             <div className="middle">
               <div className="deposit_form">
-                <h2><b>Secure Method :</b> </h2>
+                <h2>
+                  <b>Secure Method :</b>{" "}
+                </h2>
                 <div>
                   <label>Deposit Amount</label>
                   <br />
@@ -105,22 +110,21 @@ class Deposit extends Component {
                 </div>
                 <button
                   className="form_btn"
-                  onClick={this.handleDepositPayStack}
+                  onClick={this.handleDeposit}
                   disabled={this.state.loading}
                 >
                   {this.state.loading ? "Processing..." : "Make Payment"}
                 </button>
-
-
-
               </div>
-
-
+              
+              <div className="footer">
+                <p>Deposits are processed securely and swiftly.</p>
+                <p>Your financial information is kept safe at all times.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     );
   }
 }
