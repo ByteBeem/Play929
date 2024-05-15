@@ -19,6 +19,7 @@ const Create = ({ isOpen, onClose }) => {
   const stakeAmountOptions = ['', 'R10', 'R30', 'R50', 'R100', 'R250'];
   const token = localStorage.getItem("token");
   const [players, setPlayers] = useState([]);
+  const [isUnavailable , seIsUnavailable] = useState(true);
   const [csrfToken, setCsrfToken] = useState("");
 
   useEffect(() => {
@@ -271,11 +272,11 @@ const Create = ({ isOpen, onClose }) => {
                 <span className="or_text">OR:</span>
                 <button
                   onClick={handleSearch}
-                  className={`form_btn ${isLoading ? "disabled" : ""}`}
-                  disabled={isLoading}
-                  aria-busy={isLoading}
+                  className={`form_btn ${isUnavailable ? "disabled" : ""}`}
+                  disabled={isUnavailable}
+                  aria-busy={isUnavailable}
                 >
-                  {isLoading ? "Searching ..." : "Search For Online Players"}
+                  {isUnavailable ? "Search For Online Players ..." : "Search For Online Players"}
                 </button>
               </div>
             )}
