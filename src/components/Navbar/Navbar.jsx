@@ -98,6 +98,7 @@ const Navbar = ({ showSidebar }) => {
       <div className="tournament">
         <div className="torn_name" >Join game</div>
           <button className="torn_btn" onClick={openModal}>+</button>
+          </div>
         <ul className="games_filter">
           <li>
             <div className="balance">
@@ -110,7 +111,7 @@ const Navbar = ({ showSidebar }) => {
           </li>
         </ul>
 
-        
+        <div className="tournament">
         
 
           <div className="torn_name" >Create Game</div>
