@@ -4,7 +4,7 @@ import Auth from "../Login/Auth";
 import axios from "axios";
 import "./create.scss";
 
-const Create = ({ isOpen, onClose }) => {
+const Create = ({ isOpen, onClose  , selectedGame}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,6 +21,8 @@ const Create = ({ isOpen, onClose }) => {
   const [players, setPlayers] = useState([]);
   const [isUnavailable , seIsUnavailable] = useState(true);
   const [csrfToken, setCsrfToken] = useState("");
+
+  
 
   useEffect(() => {
     axios
@@ -72,6 +74,7 @@ const Create = ({ isOpen, onClose }) => {
         payload = {
           mode: "Friendly",
           type: selectedGameType,
+          game:selectedGame,
         };
       } else if (
         selectedGameType === "One v/s One" &&
@@ -81,6 +84,7 @@ const Create = ({ isOpen, onClose }) => {
           mode: "Stake Money",
           stake: selectedStakeAmount,
           type: selectedGameType,
+          game:selectedGame,
         };
       }
 
@@ -117,6 +121,7 @@ const Create = ({ isOpen, onClose }) => {
           mode: selectedGameMode,
           numberOfPlayers: selectedNumberOfPlayers,
           type: selectedGameType,
+          game:selectedGame,
 
         };
       } else if (selectedGameType === 'Tournament' && selectedGameMode === 'Stake Money') {
@@ -126,6 +131,7 @@ const Create = ({ isOpen, onClose }) => {
           numberOfPlayers: selectedNumberOfPlayers,
           stakeAmount: selectedStakeAmount,
           type: selectedGameType,
+          game:selectedGame,
 
         };
       }
@@ -184,6 +190,7 @@ const Create = ({ isOpen, onClose }) => {
             <button className="create-close-button" onClick={onClose}>
               X
             </button>
+            
             {!selectedGameType && (
               <div>
                 <span>Select Game Type:</span>

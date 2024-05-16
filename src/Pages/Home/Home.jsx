@@ -53,9 +53,7 @@ class Home extends Component {
       if (response.status === 200) {
         this.setState({ prevGames: response.data.prevGames });
         this.state.prevGames.forEach(game => {
-          console.log("Mode:", game.mode);
-          console.log("Stake Amount:", game.stakeAmount);
-          console.log("Type:", game.type);
+          
 
         });
       }
@@ -87,7 +85,13 @@ class Home extends Component {
     } catch (error) {
 
     }
-  }
+  };
+
+  handleWatch = async()=>{
+
+    console.log("watching...");
+
+  };
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
@@ -108,16 +112,16 @@ class Home extends Component {
                       <div key={index} className="card">
                         <img src={image} alt={`Card ${index + 1}`} />
                         <div className="tournament_info">
-                          <h3>{game.type}</h3>
-                          <p>Type: {game.stakeAmount} {game.mode}</p>
+                          <h3>{game.game}</h3>
+                          <p>{game.stakeAmount} {game.mode}</p>
 
                           {game.state === "won" ? (
-                            <p style={{ color: "green" }}>You won!</p>
+                            <p style={{ color: "green" }}></p>
                           ) : (
                             <p style={{ color: "green" }}>In progess!</p>
                           )}
 
-                          <button className="watch-button" >Watch</button>
+                          <button className="watch-button" onClick={this.handleWatch} >Watch</button>
 
                         </div>
                       </div>
