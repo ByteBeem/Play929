@@ -108,6 +108,9 @@ const Navbar = ({ showSidebar }) => {
         </ul>
 
         <div className="tournament">
+        <div className="torn_name" >Join game</div>
+          <button className="torn_btn" onClick={openModal}>+</button>
+        
 
           <div className="torn_name" >Create Game</div>
           <button className="torn_btn" onClick={openModal}>+</button>
