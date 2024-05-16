@@ -118,7 +118,7 @@ class Home extends Component {
                           {game.state === "won" ? (
                             <p style={{ color: "green" }}></p>
                           ) : (
-                            <p style={{ color: "green" }}>In progess!</p>
+                            <p style={{ color: "green" }}>{game.state}</p>
                           )}
 
                           <button className="watch-button" onClick={this.handleWatch} >Watch</button>
