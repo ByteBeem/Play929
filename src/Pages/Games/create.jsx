@@ -100,9 +100,8 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
       );
 
       if (response.status === 200) {
-        console.log("whitelink:", response.data.white);
-        console.log("blacklink:", response.data.black);
-        window.location.href=response.data.white;
+      
+        window.location.href=response.data.Link;
       }
     } catch (error) {
       setErrorMessage(error.response.data.error);
