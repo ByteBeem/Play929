@@ -83,6 +83,16 @@ const Wallet = ({ showSidebar, active, closeSidebar }) => {
             Deposit
           </Link>
         </div>
+        <div className="footer">
+          <p>
+            Withdrawals: We take 10% of the requested withdrawal amount. Deposits are processed instantly and securely.
+            Withdrawals may take up to 24 hours to reflect.
+          </p>
+          <p>
+            Disclaimer: We handle transactions with the utmost care and security. However, please be advised that all
+            transactions are subject to verification and may be delayed or declined based on security protocols.
+          </p>
+        </div>
         {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
         {errorModalOpen && <Error errorMessage = {errorMessage} isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)} />}
       </div>
