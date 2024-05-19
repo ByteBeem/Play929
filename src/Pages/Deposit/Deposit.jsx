@@ -121,7 +121,7 @@ class Deposit extends Component {
                   </>
                 ) : (
                   <>
-                    {!showPayPalButtons && ( 
+                    {!showPayPalButtons && (
                       <>
                         <h2>
                           <b>Deposit with Paypal:</b>{" "}
@@ -141,14 +141,15 @@ class Deposit extends Component {
                         </div>
                         <button
                           className="form_btn"
-                          //onClick={this.setState({showPayPalButtons : true})}
+                          onClick={() => this.setState({ showPayPalButtons: true })} 
                           disabled={this.state.loading}
                         >
                           {this.state.loading ? "Processing..." : "Proceed"}
                         </button>
                       </>
                     )}
-                    {showPayPalButtons && ( 
+
+                    {showPayPalButtons && (
                       <PayPalScriptProvider options={{ "client-id": "Aed5UEDwLFdwNKeX05avjbYGjEqvPqpOVfLPgvmk_4jM7rVkgtubq2IatkHNaM4aLVLYAuykpr9xQlg6" }}>
                         <div className="paypal_buttons">
                           <h1>Deposit with PayPal</h1>
@@ -163,34 +164,32 @@ class Deposit extends Component {
                                 }],
                               });
                             }}
-                            onApprove={(data, actions) =>
-                              {
-                                return actions.order.capture().then(details => {
-                                  alert('Transaction completed by ' + details.payer.name.given_name);
-                                });
-                              }}
-                            />
-                          </div>
-                        </PayPalScriptProvider>
-                      )}
-                    </>
-                  )}
-                </div>
-  
-                <div className="footer">
-                  <p>Deposits are processed securely and swiftly using trusted payment gateways like PayFast , Paypal and Yoco.</p>
-                  <p>We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.</p>
-                  <p>Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.</p>
-                  <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
-                  <p>© 2024 Play929. All rights reserved.</p>
-                </div>
+                            onApprove={(data, actions) => {
+                              return actions.order.capture().then(details => {
+                                alert('Transaction completed by ' + details.payer.name.given_name);
+                              });
+                            }}
+                          />
+                        </div>
+                      </PayPalScriptProvider>
+                    )}
+                  </>
+                )}
+              </div>
+
+              <div className="footer">
+                <p>Deposits are processed securely and swiftly using trusted payment gateways like PayFast , Paypal and Yoco.</p>
+                <p>We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.</p>
+                <p>Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.</p>
+                <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
+                <p>© 2024 Play929. All rights reserved.</p>
               </div>
             </div>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
-  
-  export default Deposit;
-  
+}
+
+export default Deposit;
