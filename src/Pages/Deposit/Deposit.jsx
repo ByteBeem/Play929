@@ -134,7 +134,7 @@ class Deposit extends Component {
                           return actions.order.create({
                             purchase_units: [{
                               amount: {
-                                value: amount,
+                                value: '10.00',
                               },
                             }],
                           });
