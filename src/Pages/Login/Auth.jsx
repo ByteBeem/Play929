@@ -5,6 +5,7 @@ import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
 import ReCAPTCHA from "react-google-recaptcha";
+import { validateRequired, validateEmail, validatePassword, validateMatch } from '../Validation/Validation';
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {
@@ -121,10 +122,12 @@ const Login = ({ isOpen, onClose }) => {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorSignUpMessage(error.response.data.error);
         setRecaptcha('');
+        setIsLoading(false);
         recaptchaRef.current.reset();
       } else {
         setErrorSignUpMessage("Signup failed. Please try again.");
         setRecaptcha('');
+        setIsLoading(false);
         recaptchaRef.current.reset();
       }
       setIsLoading(false);

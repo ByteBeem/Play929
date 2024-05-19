@@ -32,25 +32,8 @@ const Navbar = ({ showSidebar }) => {
     setCreateModalOpen(true);
   };
 
-  const ws = new WebSocket('wss://play929-1e88617fc658.herokuapp.com');
-  ws.onopen = () => {
-    ws.send(JSON.stringify({ userId: userEmail }));
-  };
+ 
 
-
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === 'onlineStatus') {
-      const onlineUserIds = data.onlineUserIds;
-      console.log(onlineUserIds)
-
-    }
-  };
-
-  setInterval(() => {
-
-    ws.send(JSON.stringify({ type: 'heartbeat', userId: userEmail }));
-  }, 30000);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

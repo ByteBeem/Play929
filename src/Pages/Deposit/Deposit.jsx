@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Deposit.scss";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 class Deposit extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Deposit extends Component {
       show: true,
     };
 
+    this.countryCode = localStorage.getItem("country");
     this.token = localStorage.getItem("token");
     this.idClient = localStorage.getItem("idclient");
   }
@@ -61,8 +63,6 @@ class Deposit extends Component {
         {
           headers: {
             Authorization: `Bearer ${this.token}`,
-
-
           },
         }
       )
@@ -80,7 +80,6 @@ class Deposit extends Component {
       });
   };
 
-
   render() {
     const { amount, message, error } = this.state;
     const { showSidebar, active, closeSidebar } = this.props;
@@ -93,29 +92,62 @@ class Deposit extends Component {
           <div className="content">
             <div className="middle">
               <div className="deposit_form">
-                <h2>
-                  <b>Payfast Method :</b>{" "}
-                </h2>
-                <div>
-                  <label>Deposit Amount</label>
-                  <br />
-                  <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => this.setState({ amount: e.target.value })}
-                    inputMode="numeric"
-                  />
+                {this.countryCode === "ZA" ? (
+                  <>
+                    <h2>
+                      <b>Payfast Method :</b>{" "}
+                    </h2>
+                    <div>
+                      <label>Deposit Amount</label>
+                      <br />
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => this.setState({ amount: e.target.value })}
+                        inputMode="numeric"
+                      />
 
-                  {message && <p className="success-message">{message}</p>}
-                  {error && <p className="error-message">{error}</p>}
-                </div>
-                <button
-                  className="form_btn"
-                  onClick={this.handleDeposit}
-                  disabled={this.state.loading}
-                >
-                  {this.state.loading ? "Processing..." : "Make Payment"}
-                </button>
+                      {message && <p className="success-message">{message}</p>}
+                      {error && <p className="error-message">{error}</p>}
+                    </div>
+                    <button
+                      className="form_btn"
+                      onClick={this.handleDeposit}
+                      disabled={this.state.loading}
+                    >
+                      {this.state.loading ? "Processing..." : "Make Payment"}
+                    </button>
+                  </>
+                ) : (
+                  <PayPalScriptProvider options={{ "client-id": "Aed5UEDwLFdwNKeX05avjbYGjEqvPqpOVfLPgvmk_4jM7rVkgtubq2IatkHNaM4aLVLYAuykpr9xQlg6" }}>
+                    <div className="deposit_form">
+                      <h1>Deposit with PayPal</h1>
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => this.setState({ amount: e.target.value })}
+                        inputMode="numeric"
+                      />
+                      <PayPalButtons
+                        style={{ layout: 'vertical' }}
+                        createOrder={(data, actions) => {
+                          return actions.order.create({
+                            purchase_units: [{
+                              amount: {
+                                value: amount,
+                              },
+                            }],
+                          });
+                        }}
+                        onApprove={(data, actions) => {
+                          return actions.order.capture().then(details => {
+                            alert('Transaction completed by ' + details.payer.name.given_name);
+                          });
+                        }}
+                      />
+                    </div>
+                  </PayPalScriptProvider>
+                )}
               </div>
 
               <div className="footer">
@@ -125,7 +157,6 @@ class Deposit extends Component {
                 <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
                 <p>© 2024 Play929. All rights reserved.</p>
               </div>
-
             </div>
           </div>
         </div>
