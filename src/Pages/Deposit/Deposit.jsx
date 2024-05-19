@@ -124,7 +124,7 @@ class Deposit extends Component {
                     {!showPayPalButtons && ( 
                       <>
                         <h2>
-                          <b>Enter Deposit Amount:</b>{" "}
+                          <b>Deposit with Paypal:</b>{" "}
                         </h2>
                         <div>
                           <label>Amount</label>
@@ -141,7 +141,7 @@ class Deposit extends Component {
                         </div>
                         <button
                           className="form_btn"
-                          onClick={this.handleDeposit}
+                          onClick={this.setState({showPayPalButtons : true})}
                           disabled={this.state.loading}
                         >
                           {this.state.loading ? "Processing..." : "Proceed"}
