@@ -141,7 +141,7 @@ class Deposit extends Component {
                         </div>
                         <button
                           className="form_btn"
-                          onClick={this.setState({showPayPalButtons : true})}
+                          //onClick={this.setState({showPayPalButtons : true})}
                           disabled={this.state.loading}
                         >
                           {this.state.loading ? "Processing..." : "Proceed"}
