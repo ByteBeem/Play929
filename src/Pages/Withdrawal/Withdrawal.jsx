@@ -8,11 +8,13 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
   const [amount, setAmount] = useState("");
   const [account, setAccount] = useState("");
   const [bank, setBank] = useState("");
+  const [email, setEmail] = useState(""); // Added email state for PayPal withdrawal
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const token = localStorage.getItem("token");
+  const countryCode = localStorage.getItem("country");
   const [csrfToken, setCsrfToken] = useState("");
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
       })
       .then((response) => {
         const csrfToken = response.data.csrfToken;
-        
+
         setCsrfToken(csrfToken);
       });
   }, [token]);
@@ -50,7 +52,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
       amount: parseFloat(amount),
       account: account,
       bank: bank,
-      password: password 
+      password: password
     };
 
     axios
@@ -70,7 +72,59 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
         setPassword("");
       })
       .catch((error) => {
-        setError( error.response.data.error);
+        setError(error.response.data.error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleWithdrawPaypal = () => {
+    setError("");
+    setMessage("");
+    setLoading(true);
+
+    if (isNaN(amount) || amount <= 0) {
+      setError("Invalid withdrawal amount");
+      setLoading(false);
+      return;
+    }
+
+    if (!email) { 
+      setError("Enter PayPal email");
+      setLoading(false);
+      return;
+    }
+
+    if (!password) {
+      setError("Enter password");
+      setLoading(false);
+      return;
+    }
+
+    const requestBody = {
+      amount: parseFloat(amount),
+      email: email, 
+      password: password
+    };
+
+    axios
+      .post("https://play929-1e88617fc658.herokuapp.com/wallet/withdrawPaypal", requestBody, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-CSRF-Token": csrfToken
+        }
+      })
+      .then((response) => {
+        setMessage(
+          `Withdrawal successful. New balance: R ${response.data.newBalance}`
+        );
+        setAmount("");
+        setEmail(""); 
+        setPassword("");
+      })
+      .catch((error) => {
+        setError(error.response.data.error);
       })
       .finally(() => {
         setLoading(false);
@@ -85,37 +139,75 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
         <div className="content">
           <div className="middle">
             <div className="left">
-              <h3>Withdraw Funds</h3>
-              <div>
-                <label>Withdraw Amount</label>
-                <br />
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  inputMode="numeric"
-                />
-              </div>
-              <div>
-                <label>Account Number</label>
-                <br />
-                <input
-                  type="text"
-                  value={account}
-                  onChange={(e) => setAccount(e.target.value)}
-                  inputMode="numeric"
-                />
-              </div>
-              <div>
-                <label>Password</label>
-                <br />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  inputMode="text"
-                />
-              </div>
+              {countryCode === "ZA" ? (
+                <>
+                  <h3>Withdraw Funds</h3>
+                  <div>
+                    <label>Withdraw Amount</label>
+                    <br />
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      inputMode="numeric"
+                    />
+                  </div>
+                  <div>
+                    <label>Account Number</label>
+                    <br />
+                    <input
+                      type="text"
+                      value={account}
+                      onChange={(e) => setAccount(e.target.value)}
+                      inputMode="numeric"
+                    />
+                  </div>
+                  <div>
+                    <label>Password</label>
+                    <br />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      inputMode="text"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h4>Withdraw Funds - Paypal</h4>
+                  <div>
+                    <label>Withdraw Amount</label>
+                    <br />
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      inputMode="numeric"
+                    />
+                  </div>
+                  <div>
+                    <label>Paypal Email</label>
+                    <br />
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      inputMode="text"
+                    />
+                  </div>
+                  <div>
+                    <label>Password</label>
+                    <br />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      inputMode="text"
+                    />
+                  </div>
+                </>
+              )}
             </div>
             <div className="right">
               <div className="dropdown_container">
@@ -133,13 +225,23 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                   <option value="Absa">Absa</option>
                 </select>
               </div>
-              <button
-                className="form_btn"
-                onClick={handleWithdraw}
-                disabled={loading}
-              >
-                {loading ? "Processing..." : "Withdraw"}
-              </button>
+              {countryCode === "ZA" ? (
+                <button
+                  className="form_btn"
+                  onClick={handleWithdraw}
+                  disabled={loading}
+                >
+                  {loading ? "Processing..." : "Withdraw"}
+                </button>
+              ) : (
+                <button
+                  className="form_btn"
+                  onClick={handleWithdrawPaypal}
+                  disabled={loading}
+                >
+                  {loading ? "Processing..." : "Withdraw"}
+                </button>
+              )}
               {message && <p className="success-message">{message}</p>}
               {error && <p className="error-message">{error}</p>}
             </div>
