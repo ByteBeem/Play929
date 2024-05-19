@@ -17,6 +17,7 @@ class Deposit extends Component {
       error: "",
       currentBalance: "0.00",
       show: true,
+      showPayPalButtons: false,
     };
 
     this.countryCode = localStorage.getItem("country");
@@ -81,7 +82,7 @@ class Deposit extends Component {
   };
 
   render() {
-    const { amount, message, error } = this.state;
+    const { amount, message, error, showPayPalButtons } = this.state;
     const { showSidebar, active, closeSidebar } = this.props;
 
     return (
@@ -119,50 +120,77 @@ class Deposit extends Component {
                     </button>
                   </>
                 ) : (
-                  <PayPalScriptProvider options={{ "client-id": "Aed5UEDwLFdwNKeX05avjbYGjEqvPqpOVfLPgvmk_4jM7rVkgtubq2IatkHNaM4aLVLYAuykpr9xQlg6" }}>
-                    <div className="deposit_form">
-                      <h1>Deposit with PayPal</h1>
-                      <input
-                        type="number"
-                        value={amount}
-                        onChange={(e) => this.setState({ amount: e.target.value })}
-                        inputMode="numeric"
-                      />
-                      <PayPalButtons
-                        style={{ layout: 'vertical' }}
-                        createOrder={(data, actions) => {
-                          return actions.order.create({
-                            purchase_units: [{
-                              amount: {
-                                value: '10.00',
-                              },
-                            }],
-                          });
-                        }}
-                        onApprove={(data, actions) => {
-                          return actions.order.capture().then(details => {
-                            alert('Transaction completed by ' + details.payer.name.given_name);
-                          });
-                        }}
-                      />
-                    </div>
-                  </PayPalScriptProvider>
-                )}
-              </div>
+                  <>
+                    {!showPayPalButtons && ( 
+                      <>
+                        <h2>
+                          <b>Enter Deposit Amount:</b>{" "}
+                        </h2>
+                        <div>
+                          <label>Amount</label>
+                          <br />
+                          <input
+                            type="number"
+                            value={amount}
+                            onChange={(e) => this.setState({ amount: e.target.value })}
+                            inputMode="numeric"
+                          />
 
-              <div className="footer">
-                <p>Deposits are processed securely and swiftly using trusted payment gateways like PayFast and Yoco.</p>
-                <p>We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.</p>
-                <p>Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.</p>
-                <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
-                <p>© 2024 Play929. All rights reserved.</p>
+                          {message && <p className="success-message">{message}</p>}
+                          {error && <p className="error-message">{error}</p>}
+                        </div>
+                        <button
+                          className="form_btn"
+                          onClick={this.handleDeposit}
+                          disabled={this.state.loading}
+                        >
+                          {this.state.loading ? "Processing..." : "Proceed"}
+                        </button>
+                      </>
+                    )}
+                    {showPayPalButtons && ( 
+                      <PayPalScriptProvider options={{ "client-id": "Aed5UEDwLFdwNKeX05avjbYGjEqvPqpOVfLPgvmk_4jM7rVkgtubq2IatkHNaM4aLVLYAuykpr9xQlg6" }}>
+                        <div className="paypal_buttons">
+                          <h1>Deposit with PayPal</h1>
+                          <PayPalButtons
+                            style={{ layout: 'vertical' }}
+                            createOrder={(data, actions) => {
+                              return actions.order.create({
+                                purchase_units: [{
+                                  amount: {
+                                    value: amount,
+                                  },
+                                }],
+                              });
+                            }}
+                            onApprove={(data, actions) =>
+                              {
+                                return actions.order.capture().then(details => {
+                                  alert('Transaction completed by ' + details.payer.name.given_name);
+                                });
+                              }}
+                            />
+                          </div>
+                        </PayPalScriptProvider>
+                      )}
+                    </>
+                  )}
+                </div>
+  
+                <div className="footer">
+                  <p>Deposits are processed securely and swiftly using trusted payment gateways like PayFast , Paypal and Yoco.</p>
+                  <p>We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.</p>
+                  <p>Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.</p>
+                  <p>For any inquiries or assistance, please contact our customer support team at <span className="contact-email">support@play929.com</span>.</p>
+                  <p>© 2024 Play929. All rights reserved.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
-
-export default Deposit;
+  
+  export default Deposit;
+  
