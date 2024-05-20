@@ -15,7 +15,6 @@ const Navbar = ({ showSidebar }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedGame, setSelectedGame] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const userEmail = localStorage.getItem("userEmail");
   const token = localStorage.getItem("token");
 
   const openModal = () => {
@@ -37,6 +36,7 @@ const Navbar = ({ showSidebar }) => {
 
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
 
     if (token) {
       fetchUserData(token);

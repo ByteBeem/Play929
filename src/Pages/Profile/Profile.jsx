@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Profile.scss";
 import "../../App.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import UserProfile from "../../assets/user.jpeg";
@@ -18,20 +17,11 @@ function Profile({ showSidebar, active, closeSidebar }) {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [activities, setActivities] = useState([]);
-  const [Dates, setDates] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const fullName = userData.name;
   const surname = userData.surname;
 
-  const dummyData = [
-    { date: new Date(), type: "WIthdrawal", amount: "$50" },
-    { date: new Date(), type: "Deposit", amount: "$100" },
-    { date: new Date(), type: "Deposit", amount: "$30" },
-    { date: new Date(), type: "Withdrawal", amount: "$80" },
-  ];
-
-
+ 
 
   useEffect(() => {
     const token = localStorage.getItem("token");

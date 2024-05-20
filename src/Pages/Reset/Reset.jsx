@@ -7,7 +7,6 @@ import axios from 'axios';
 function Reset({ showSidebar, active, closeSidebar }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +16,6 @@ function Reset({ showSidebar, active, closeSidebar }) {
     setIsLoading(true);
     setError("");
     setMessage("");
-    setSuccessMessage(null);
     const token = localStorage.getItem("token");
     if(!token){
       setError("You need to log in first!");

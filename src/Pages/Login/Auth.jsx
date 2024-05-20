@@ -5,7 +5,6 @@ import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
 import ReCAPTCHA from "react-google-recaptcha";
-import { validateRequired, validateEmail, validatePassword, validateMatch } from '../Validation/Validation';
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {

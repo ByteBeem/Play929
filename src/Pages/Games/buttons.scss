@@ -18,4 +18,7 @@
     text-align: center;
   }
  
-  
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }

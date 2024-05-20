@@ -17,7 +17,6 @@ class Home extends Component {
       loading: false,
       betAmountInput: "",
       userEmail: "",
-      numberOfCards: 10,
       maxContainerHeight: window.innerHeight - 100
     };
 
@@ -95,8 +94,8 @@ class Home extends Component {
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const { numberOfCards, maxContainerHeight, errorModalOpen, errorMessage, prevGames } = this.state;
-    const hasToken = this.token;
+    const {  maxContainerHeight, errorModalOpen, errorMessage, prevGames } = this.state;
+    
 
     return (
       <div className="home">

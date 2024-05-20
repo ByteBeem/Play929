@@ -18,7 +18,7 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
   const playerOptions = ['', 3, 4, 6, 8];
   const token = localStorage.getItem("token");
   const [players, setPlayers] = useState([]);
-  const [isUnavailable , seIsUnavailable] = useState(true);
+  const [isUnavailable ] = useState(true);
   const [csrfToken, setCsrfToken] = useState("");
   const countryCode = localStorage.getItem("country");
   const [stakeAmountOptions , setStakeAmountOptions]= useState([]);
@@ -47,7 +47,7 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
       setStakeAmountOptions(['', '$5', '$10', '$30', '$50', '$100']);
 
      }
-  }, [token]);
+  }, [token , countryCode]);
 
   const handleSearch = async () => {
     setIsLoading(true);
@@ -151,6 +151,10 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
           Authorization: `Bearer ${token}`,
         }
       });
+
+      if(response.status === 200){
+        
+      }
 
     } catch (error) {
 

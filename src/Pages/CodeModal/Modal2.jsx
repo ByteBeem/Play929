@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./modal.scss";
 
@@ -10,26 +10,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
   const [codeConfirmed, setCodeConfirmed] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [timer, setTimer] = useState(120);
-  const [timerInterval, setTimerInterval] = useState(null);
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-  };
-
-  useEffect(() => {
-    if (timer > 0) {
-      const interval = setInterval(() => {
-        setTimer(prevTimer => prevTimer - 1);
-      }, 1000);
-      setTimerInterval(interval);
-      return () => clearInterval(interval);
-    } else {
-      clearInterval(timerInterval);
-    }
-  }, [timer]);
 
   const handleOTPChange = (e) => {
     setCode(e.target.value);
@@ -106,7 +87,7 @@ const ErrorModal = ({ isOpen, onClose }) => {
           </button>
           {!codeConfirmed ? (
             <>
-              <p>{timer === 0 ? "Code Expired" : `Time remaining: ${formatTime(timer)}`}</p>
+              
               <input
                 type="number"
                 value={code}
