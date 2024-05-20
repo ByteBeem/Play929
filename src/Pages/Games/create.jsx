@@ -16,15 +16,18 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
   const gameTypes = ['', 'Tournament', 'One v/s One'];
   const gameModes = ['', 'Friendly', 'Stake Money'];
   const playerOptions = ['', 3, 4, 6, 8];
-  const stakeAmountOptions = ['', 'R10', 'R30', 'R50', 'R100', 'R250'];
   const token = localStorage.getItem("token");
   const [players, setPlayers] = useState([]);
   const [isUnavailable , seIsUnavailable] = useState(true);
   const [csrfToken, setCsrfToken] = useState("");
+  const countryCode = localStorage.getItem("country");
+  const [stakeAmountOptions , setStakeAmountOptions]= useState([]);
+
 
   
 
   useEffect(() => {
+
     axios
       .get("https://play929-1e88617fc658.herokuapp.com/games/csrfToken", {
         headers: {
@@ -36,6 +39,14 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
         
         setCsrfToken(csrfToken);
       });
+
+      if(countryCode === "ZA"){
+        setStakeAmountOptions(['', `${countryCode}10`, `${countryCode}30`, `${countryCode}50`, `${countryCode}100`, `${countryCode}250`]);
+     }else{
+
+      setStakeAmountOptions(['', `${countryCode}5`, `${countryCode}10`, `${countryCode}30`, `${countryCode}50`, `${countryCode}100`]);
+
+     }
   }, [token]);
 
   const handleSearch = async () => {
