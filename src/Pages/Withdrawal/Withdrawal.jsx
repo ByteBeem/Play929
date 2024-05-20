@@ -90,7 +90,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
       return;
     }
 
-    if (!email) { 
+    if (!email) {
       setError("Enter PayPal email");
       setLoading(false);
       return;
@@ -104,7 +104,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
 
     const requestBody = {
       amount: parseFloat(amount),
-      email: email, 
+      email: email,
       password: password
     };
 
@@ -120,7 +120,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
           `Withdrawal successful. New balance: R ${response.data.newBalance}`
         );
         setAmount("");
-        setEmail(""); 
+        setEmail("");
         setPassword("");
       })
       .catch((error) => {
@@ -172,6 +172,33 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                       inputMode="text"
                     />
                   </div>
+                  <div className="right">
+                    <div className="dropdown_container">
+                      <span>Select Bank:</span>
+                      <br />
+                      <select
+                        className="dropdown"
+                        value={bank}
+                        onChange={(e) => setBank(e.target.value)}
+                      >
+                        <option value="">Select a Bank</option>
+                        <option value="Capitec">Capitec Bank</option>
+                        <option value="Standardbank">Standard Bank</option>
+                        <option value="Tymebank">TymeBank</option>
+                        <option value="Absa">Absa</option>
+                      </select>
+                    </div>
+
+                    <button
+                      className="form_btn"
+                      onClick={handleWithdraw}
+                      disabled={loading}
+                    >
+                      {loading ? "Processing..." : "Withdraw"}
+                    </button>
+
+                  </div>
+
                 </>
               ) : (
                 <>
@@ -206,44 +233,21 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
                       inputMode="text"
                     />
                   </div>
+
+                  <button
+                    className="form_btn"
+                    onClick={handleWithdrawPaypal}
+                    disabled={loading}
+                  >
+                    {loading ? "Processing..." : "Withdraw"}
+                  </button>
+
+                  {message && <p className="success-message">{message}</p>}
+                  {error && <p className="error-message">{error}</p>}
+
                 </>
+
               )}
-            </div>
-            <div className="right">
-              <div className="dropdown_container">
-                <span>Select Bank:</span>
-                <br />
-                <select
-                  className="dropdown"
-                  value={bank}
-                  onChange={(e) => setBank(e.target.value)}
-                >
-                  <option value="">Select a Bank</option>
-                  <option value="Capitec">Capitec Bank</option>
-                  <option value="Standardbank">Standard Bank</option>
-                  <option value="Tymebank">TymeBank</option>
-                  <option value="Absa">Absa</option>
-                </select>
-              </div>
-              {countryCode === "ZA" ? (
-                <button
-                  className="form_btn"
-                  onClick={handleWithdraw}
-                  disabled={loading}
-                >
-                  {loading ? "Processing..." : "Withdraw"}
-                </button>
-              ) : (
-                <button
-                  className="form_btn"
-                  onClick={handleWithdrawPaypal}
-                  disabled={loading}
-                >
-                  {loading ? "Processing..." : "Withdraw"}
-                </button>
-              )}
-              {message && <p className="success-message">{message}</p>}
-              {error && <p className="error-message">{error}</p>}
             </div>
           </div>
         </div>
