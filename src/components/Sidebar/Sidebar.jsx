@@ -12,6 +12,7 @@ import { useState } from "react";
 const Sidebar = ({ active, closeSidebar }) => {
   const [loading, setLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("home");
+  const token = localStorage.getItem("token");
 
   const handleLogout = () => {
     setLoading(true);
@@ -45,23 +46,27 @@ const Sidebar = ({ active, closeSidebar }) => {
           <span>Home</span>
         </Link>
 
-        <Link
-          onClick={() => setActiveItem("wallet")}
-          className={activeItem === "wallet" ? "link active" : "link"}
-          to="/wallets"
-        >
-          <GiWallet className="icon" />
-          <span>Wallet</span>
-        </Link>
+        {token &&
 
-        
+          <Link
+            onClick={() => setActiveItem("wallet")}
+            className={activeItem === "wallet" ? "link active" : "link"}
+            to="/wallets"
+          >
+            <GiWallet className="icon" />
+            <span>Wallet</span>
+          </Link>
 
-        <Link className="link" to="/profile">
-          <FaUser className="icon" />
-          <span>Profile</span>
-        </Link>
+        }
 
-      
+        {token &&
+
+          <Link className="link" to="/profile">
+            <FaUser className="icon" />
+            <span>Profile</span>
+          </Link>
+        }
+
 
         <Link
           className="link"

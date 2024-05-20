@@ -16,6 +16,7 @@ const Navbar = ({ showSidebar }) => {
   const [selectedGame, setSelectedGame] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userEmail = localStorage.getItem("userEmail");
+  const token = localStorage.getItem("token");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -32,11 +33,11 @@ const Navbar = ({ showSidebar }) => {
     setCreateModalOpen(true);
   };
 
- 
+
 
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+
     if (token) {
       fetchUserData(token);
     } else {
@@ -78,7 +79,7 @@ const Navbar = ({ showSidebar }) => {
   return (
     <>
       <header>
-      
+
         <ul className="games_filter">
           <li>
             <div className="balance">
@@ -91,12 +92,13 @@ const Navbar = ({ showSidebar }) => {
           </li>
         </ul>
 
-        <div className="tournament">
-        
-    
-          <div className="torn_name" >Create Game</div>
-          <button className="torn_btn" onClick={openModal}>+</button>
-        </div>
+        {token &&
+
+          <div className="tournament">
+            <div className="torn_name" >Create Game</div>
+            <button className="torn_btn" onClick={openModal}>+</button>
+          </div>
+        }
       </header>
       {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} selectedGame={selectedGame} />}
       {isModalOpen && (

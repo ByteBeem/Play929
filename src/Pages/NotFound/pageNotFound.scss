@@ -1,0 +1,29 @@
+.page-not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    h1 {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      color: #333;
+      animation: bounce 1s infinite alternate;
+    }
+    
+    p {
+      font-size: 1.5rem;
+      color: #666;
+    }
+    
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+  }
+  
