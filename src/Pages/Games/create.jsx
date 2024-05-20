@@ -44,7 +44,7 @@ const Create = ({ isOpen, onClose  , selectedGame}) => {
         setStakeAmountOptions(['', 'R10', 'R30', 'R50', 'R100', 'R250']);
      }else{
 
-      setStakeAmountOptions(['', '$5', '$10', '$30', '50', '$100']);
+      setStakeAmountOptions(['', '$5', '$10', '$30', '$50', '$100']);
 
      }
   }, [token]);
