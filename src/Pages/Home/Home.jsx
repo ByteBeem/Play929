@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Error from "../ErrorModal/ErrorModal";
 import "./Home.scss";
-import image from "../../assets/logo.jpg";
+import image from "../../assets/logo.png";
 
 class Home extends Component {
   constructor(props) {
