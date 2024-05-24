@@ -12,28 +12,33 @@ import { FiLoader } from "react-icons/fi";
 
 
 function Profile({ showSidebar, active, closeSidebar }) {
-  const [userData, setUserData] = useState({});
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const fullName = userData.name;
-  const surname = userData.surname;
-
- 
+  const [name , setName]=useState("");
+  const [surname , setSurname] =useState("");
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const name = localStorage.getItem("name");
+    const surname = localStorage.getItem("surname");
+    if (token &&  name && surname) {
 
-      fetchUserData(token);
+      setName(name);
+      setSurname(surname);
       fetchActivities(token);
     }
-    else {
-      setLoginModalOpen(true);
+    else if(token) {
+      fetchUserData(token);
 
-    };
+    }
+    else{
+      setLoginModalOpen(true);
+      fetchActivities(token);
+    }
 
   }, []);
 
@@ -70,7 +75,10 @@ function Profile({ showSidebar, active, closeSidebar }) {
       })
       .then((response) => {
 
-        setUserData(response.data);
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("surname", response.data.surname);
+
+
       })
       .catch((error) => {
 
@@ -103,7 +111,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
 
             <div className="text">
               <span>Fullname:</span>
-              <div className="text_item">{fullName}</div>
+              <div className="text_item">{name}</div>
 
               <span>Surname:</span>
               <div className="text_item">{surname}</div>

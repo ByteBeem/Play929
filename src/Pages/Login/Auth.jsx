@@ -5,6 +5,9 @@ import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
 import ReCAPTCHA from "react-google-recaptcha";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname } from "../Validation/Validation";
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {
@@ -20,6 +23,22 @@ const Login = ({ isOpen, onClose }) => {
   const [isModal2Open, setIsModal2Open] = useState(false);
   const [recaptcha, setRecaptcha] = useState('');
   const recaptchaRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
+  const [showSignUpConfirmPassword, setShowSignUpConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleSignUpPasswordVisibility = () => {
+    setShowSignUpPassword(!showSignUpPassword);
+  };
+
+  const toggleSignUpConfirmPasswordVisibility = () => {
+    setShowSignUpConfirmPassword(!showSignUpConfirmPassword);
+  };
+
 
   const [signUpFormData, setSignUpFormData] = useState({
     full: "",
@@ -35,12 +54,15 @@ const Login = ({ isOpen, onClose }) => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    const countryOptions = Object.entries(countriesList).map(([code, country]) => ({
-      code,
-      name: country.name,
-    }));
+    const countryOptions = Object.entries(countriesList)
+      .map(([code, country]) => ({
+        code,
+        name: country.name,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
     setCountries(countryOptions);
   }, []);
+  
 
   const handleChangeSignUp = (e) => {
     const { name, value } = e.target;
@@ -130,6 +152,8 @@ const Login = ({ isOpen, onClose }) => {
         recaptchaRef.current.reset();
       }
       setIsLoading(false);
+      setRecaptcha('');
+      recaptchaRef.current.reset();
     }
   };
 
@@ -145,6 +169,25 @@ const Login = ({ isOpen, onClose }) => {
     const { email, password } = formData;
 
 
+    if (!validateRequired(email)) {
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Email is Required",
+      }));
+      return;
+
+    }
+
+    if (!validateRequired(password)) {
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Password is Required",
+      }));
+      return;
+
+    }
 
     if (!validateEmail(email)) {
       setErrors((prevErrors) => ({
@@ -152,7 +195,8 @@ const Login = ({ isOpen, onClose }) => {
         email: "Invalid email",
       }));
       return;
-    }
+    };
+
 
     if (!recaptcha) {
       setErrorMessage("Please verify you are not a robot.");
@@ -188,12 +232,7 @@ const Login = ({ isOpen, onClose }) => {
     setIsLoading(false);
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = new RegExp(
-      "^(?!\\.)[a-zA-Z0-9._%+-]+@(?!-)[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-    );
-    return emailRegex.test(email);
-  };
+
 
   const handleForgotPasswordClick = () => {
     setShowForgotPassword(true);
@@ -233,7 +272,7 @@ const Login = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     const { email } = formData;
-    if (!email || !email.trim()) {
+    if (!email || !email.trim() || !validateEmail(email)) {
       setMessage("Please enter a valid email address.");
       return;
     }
@@ -243,13 +282,13 @@ const Login = ({ isOpen, onClose }) => {
       return;
 
     }
-  localStorage.setItem("ResetEmail" , email);
+    localStorage.setItem("ResetEmail", email);
     setIsResetLoading(true);
 
     try {
       const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/resetPassword", {
         email,
-        token : recaptcha,
+        token: recaptcha,
       });
 
       if (response.status === 200) {
@@ -272,7 +311,7 @@ const Login = ({ isOpen, onClose }) => {
 
   function onChange(value) {
     setRecaptcha(value);
-    
+
   }
 
   return (
@@ -298,10 +337,10 @@ const Login = ({ isOpen, onClose }) => {
                   />
                   {errors.email && <p className="error-message">{errors.email}</p>}
                 </div>
-                <div>
-                  <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password</label>
+                <div className="password-input-container">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
                     value={formData.password}
@@ -309,8 +348,15 @@ const Login = ({ isOpen, onClose }) => {
                     required
                     className={errors.password ? "error-input" : "valid-input"}
                   />
-                  {errors.password && <p className="error-message">{errors.password}</p>}
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="toggle-password-btn"
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
                 </div>
+                {errors.password && <p className="error-message">{errors.password}</p>}
                 <ReCAPTCHA
                   ref={recaptchaRef}
                   sitekey="6LeZbckpAAAAAF29V1j_Rvg-4zv2SAbSuolJOKzp"
@@ -441,6 +487,13 @@ const Login = ({ isOpen, onClose }) => {
                           onChange={handleChangeSignUp}
                           required
                         />
+                        <button
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                          className="toggle-password-btn"
+                        >
+                          <FontAwesomeIcon icon={showSignUpPassword ? faEyeSlash : faEye} />
+                        </button>
                         {errors.password && <p className="error-message">{errors.password}</p>}
                       </div>
                       <div className="input-group">
@@ -453,6 +506,13 @@ const Login = ({ isOpen, onClose }) => {
                           onChange={handleChangeSignUp}
                           required
                         />
+                        <button
+                          type="button"
+                          onClick={toggleSignUpConfirmPasswordVisibility}
+                          className="toggle-password-btn"
+                        >
+                          <FontAwesomeIcon icon={showSignUpConfirmPassword ? faEyeSlash : faEye} />
+                        </button>
                         <ReCAPTCHA
                           sitekey="6LeZbckpAAAAAF29V1j_Rvg-4zv2SAbSuolJOKzp"
                           onChange={onChange}

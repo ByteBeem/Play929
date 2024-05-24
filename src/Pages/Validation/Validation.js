@@ -1,19 +1,24 @@
 export const validateRequired = (value) => {
-    return value ? '' : 'This field is required.';
-  };
-  
+  return !!value; 
+};
+
+export const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email); 
+};
+
+export const validatePassword = (password) => {
+  return password.length >= 8; 
+};
+
+export const validateMatch = (value1, value2) => {
+  return value1 === value2; 
+};
+
+
+export const validateSurname = (surname) =>{
  
-  export const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) ? '' : 'Invalid email address.';
-  };
-  
-  export const validatePassword = (password) => {
-    return password.length >= 8 ? '' : 'Password must be at least 8 characters long.';
-  };
-  
-  
-  export const validateMatch = (value1, value2) => {
-    return value1 === value2 ? '' : 'Fields do not match.';
-  };
- 
+  const surnamePattern = /^[A-Za-z]+(['-][A-Za-z]+)*$/;
+
+  return surnamePattern.test(surname);
+}

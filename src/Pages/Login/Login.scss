@@ -9,6 +9,41 @@
   color: red;
 }
 
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  width: 100%; 
+  padding-right: 40px; 
+}
+
+.toggle-password-btn {
+  font-size: 1.3rem;
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+
+.error-input {
+  border-color: red;
+}
+
+.valid-input {
+  border-color: green;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+}
+
 .typing {
   text-align: center;
   margin-bottom: 20px;
