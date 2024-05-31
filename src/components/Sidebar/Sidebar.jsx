@@ -68,17 +68,20 @@ const Sidebar = ({ active, closeSidebar }) => {
         }
 
 
-        <Link
-          className="link"
-          to=""
-          onClick={() => {
-            closeSidebar();
-            handleLogout();
-          }}
-        >
-          <IoLogOut className="icon" />
-          <span>Logout</span>
-        </Link>
+        {token &&
+
+          <Link
+            className="link"
+            to=""
+            onClick={() => {
+              closeSidebar();
+              handleLogout();
+            }}
+          >
+            <IoLogOut className="icon" />
+            <span>Logout</span>
+          </Link>
+        }
       </div>
     </aside>
   );

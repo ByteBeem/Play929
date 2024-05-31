@@ -26,6 +26,16 @@ const Login = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [showSignUpConfirmPassword, setShowSignUpConfirmPassword] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+        setIsButtonDisabled(
+          errorMessage ||
+            !formData.email ||
+            !recaptcha ||
+            !formData.password
+        );
+    }, [errorMessage, formData.email, recaptcha ,formData.password]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -365,7 +375,7 @@ const Login = ({ isOpen, onClose }) => {
                 <button
                   type="submit"
                   className={`form_btn ${isLoading ? "disabled" : ""}`}
-                  disabled={isLoading}
+                  disabled={isLoading || isButtonDisabled}
                   aria-busy={isLoading}
                 >
                   {isLoading ? "Logging In..." : "Log In"}

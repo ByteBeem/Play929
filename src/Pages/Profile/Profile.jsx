@@ -58,8 +58,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
       setActivities(response.data);
     } catch (error) {
 
-      setErrorMessage(error.message);
-      setErrorModalOpen(true);
+    
     } finally {
       setLoading(false);
     }
@@ -82,8 +81,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
       })
       .catch((error) => {
 
-        setErrorMessage(error.message);
-        setErrorModalOpen(true);
+        
       })
       .finally(() => {
         setLoading(false);

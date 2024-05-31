@@ -52,7 +52,7 @@ class Home extends Component {
       if (response.status === 200) {
         this.setState({ prevGames: response.data.prevGames });
         this.state.prevGames.forEach(game => {
-          
+
 
         });
       }
@@ -67,6 +67,7 @@ class Home extends Component {
     if (!this.token) {
       return;
     }
+    this.setState({ loading: true });
 
     try {
       const response = await axios.get('https://play929-1e88617fc658.herokuapp.com/users/email', {
@@ -80,13 +81,15 @@ class Home extends Component {
         console.log(userEmail);
         localStorage.setItem('userEmail', userEmail);
         this.setState({ userEmail });
+        this.setState({ loading: true });
       }
     } catch (error) {
+      this.setState({ loading: true });
 
     }
   };
 
-  handleWatch = async()=>{
+  handleWatch = async () => {
 
     console.log("watching...");
 
@@ -94,8 +97,8 @@ class Home extends Component {
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const {  maxContainerHeight, errorModalOpen, errorMessage, prevGames } = this.state;
-    
+    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, loading } = this.state;
+
 
     return (
       <div className="home">
@@ -126,10 +129,18 @@ class Home extends Component {
                       </div>
                     ))
                   ) : (
-                    <div className="no-games-message">
-                      <p>No games found. Start creating now and play!</p>
-                    </div>
+                    this.token && loading && (
+                      <div className="no-games-message">
+                        <p>Loading...</p>
+                      </div>
+                    )
+
                   )}
+                  {!this.token && !loading &&
+                    <div className="no-games-message">
+                      <p>No games found , Please Login.</p>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
