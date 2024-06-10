@@ -17,27 +17,23 @@ function Profile({ showSidebar, active, closeSidebar }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [name , setName]=useState("");
-  const [surname , setSurname] =useState("");
+  const [ userData, setUserData]=useState("");
+
+  const name = userData.name;
+  const surname = userData.surname;
   
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const name = localStorage.getItem("name");
-    const surname = localStorage.getItem("surname");
-    if (token &&  name && surname) {
+    if (token) {
 
-      setName(name);
-      setSurname(surname);
+      fetchUserData(token);
       fetchActivities(token);
     }
-    else if(token) {
-      fetchUserData(token);
-
-    }
+    
     else{
       setLoginModalOpen(true);
-      fetchActivities(token);
+      
     }
 
   }, []);
@@ -74,8 +70,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
       })
       .then((response) => {
 
-        localStorage.setItem("name", response.data.name);
-        localStorage.setItem("surname", response.data.surname);
+        setUserData(response.data);
 
 
       })
