@@ -4,9 +4,6 @@ import axios from "axios";
 import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
-import ReCAPTCHA from "react-google-recaptcha";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname } from "../Validation/Validation";
 import "./Login.scss";
 
@@ -21,33 +18,19 @@ const Login = ({ isOpen, onClose }) => {
   const [isResetLoading, setIsResetLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModal2Open, setIsModal2Open] = useState(false);
-  const [recaptcha, setRecaptcha] = useState('');
-  const recaptchaRef = useRef(null);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
-  const [showSignUpConfirmPassword, setShowSignUpConfirmPassword] = useState(false);
+  
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
         setIsButtonDisabled(
           errorMessage ||
             !formData.email ||
-            !recaptcha ||
             !formData.password
         );
-    }, [errorMessage, formData.email, recaptcha ,formData.password]);
+    }, [errorMessage, formData.email ,formData.password]);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+ 
 
-  const toggleSignUpPasswordVisibility = () => {
-    setShowSignUpPassword(!showSignUpPassword);
-  };
-
-  const toggleSignUpConfirmPasswordVisibility = () => {
-    setShowSignUpConfirmPassword(!showSignUpConfirmPassword);
-  };
 
 
   const [signUpFormData, setSignUpFormData] = useState({
@@ -109,12 +92,6 @@ const Login = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!recaptcha) {
-      setErrorSignUpMessage("Please verify you are not a robot.");
-      return;
-
-    }
-
     setIsLoading(true);
     localStorage.setItem("email", email);
 
@@ -152,22 +129,22 @@ const Login = ({ isOpen, onClose }) => {
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorSignUpMessage(error.response.data.error);
-        setRecaptcha('');
+        
         setIsLoading(false);
-        recaptchaRef.current.reset();
+       
       } else {
         setErrorSignUpMessage("Signup failed. Please try again.");
-        setRecaptcha('');
+        
         setIsLoading(false);
-        recaptchaRef.current.reset();
+    
       }
       setIsLoading(false);
-      setRecaptcha('');
-      recaptchaRef.current.reset();
+      
     }
   };
 
   const handleChange = (e) => {
+    setErrorMessage("");
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
@@ -208,19 +185,13 @@ const Login = ({ isOpen, onClose }) => {
     };
 
 
-    if (!recaptcha) {
-      setErrorMessage("Please verify you are not a robot.");
-      return;
-
-    }
-
     setIsLoading(true);
 
     try {
       const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/login", {
         email,
         password,
-        token: recaptcha,
+       
       });
 
       if (response.status === 200) {
@@ -230,12 +201,10 @@ const Login = ({ isOpen, onClose }) => {
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorMessage(error.response.data.error);
-        setRecaptcha('');
-        recaptchaRef.current.reset();
+       
       } else {
         setErrorMessage("Login failed. Please try again.");
-        setRecaptcha('');
-        recaptchaRef.current.reset();
+      
       }
     }
 
@@ -287,18 +256,14 @@ const Login = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!recaptcha) {
-      setMessage("Please verify you are not a robot.");
-      return;
-
-    }
+   
     localStorage.setItem("ResetEmail", email);
     setIsResetLoading(true);
 
     try {
       const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/resetPassword", {
         email,
-        token: recaptcha,
+        
       });
 
       if (response.status === 200) {
@@ -307,22 +272,17 @@ const Login = ({ isOpen, onClose }) => {
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setMessage(error.response.data.error);
-        setRecaptcha('');
-        recaptchaRef.current.reset();
+        
       } else {
         setMessage("Failed to reset password. Please try again later.");
-        setRecaptcha('');
-        recaptchaRef.current.reset();
+       
       }
     }
 
     setIsResetLoading(false);
   };
 
-  function onChange(value) {
-    setRecaptcha(value);
-
-  }
+ 
 
   return (
     isOpen && (
@@ -350,7 +310,7 @@ const Login = ({ isOpen, onClose }) => {
                 <label htmlFor="password">Password</label>
                 <div className="password-input-container">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type= "text" 
                     id="password"
                     name="password"
                     value={formData.password}
@@ -358,20 +318,10 @@ const Login = ({ isOpen, onClose }) => {
                     required
                     className={errors.password ? "error-input" : "valid-input"}
                   />
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="toggle-password-btn"
-                  >
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                  </button>
+                  
                 </div>
                 {errors.password && <p className="error-message">{errors.password}</p>}
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey="6LeZbckpAAAAAF29V1j_Rvg-4zv2SAbSuolJOKzp"
-                  onChange={onChange}
-                />
+                
                 <button
                   type="submit"
                   className={`form_btn ${isLoading ? "disabled" : ""}`}
@@ -399,11 +349,7 @@ const Login = ({ isOpen, onClose }) => {
                         required
                       />
                     </div>
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey="6LeZbckpAAAAAF29V1j_Rvg-4zv2SAbSuolJOKzp"
-                      onChange={onChange}
-                    />
+                    
                     <button
                       type="submit"
                       className={`form_btn ${isResetLoading ? "disabled" : ""}`}
@@ -490,43 +436,28 @@ const Login = ({ isOpen, onClose }) => {
                       <div className="input-group">
                         <label htmlFor="password">Password: </label>
                         <input
-                          type="password"
+                          type="text"
                           id="password"
                           name="password"
                           value={signUpFormData.password}
                           onChange={handleChangeSignUp}
                           required
                         />
-                        <button
-                          type="button"
-                          onClick={togglePasswordVisibility}
-                          className="toggle-password-btn"
-                        >
-                          <FontAwesomeIcon icon={showSignUpPassword ? faEyeSlash : faEye} />
-                        </button>
+                       
                         {errors.password && <p className="error-message">{errors.password}</p>}
                       </div>
                       <div className="input-group">
                         <label htmlFor="confirmPassword">Confirm Password: </label>
                         <input
-                          type="password"
+                          type="text"
                           id="confirmPassword"
                           name="confirmPassword"
                           value={signUpFormData.confirmPassword}
                           onChange={handleChangeSignUp}
                           required
                         />
-                        <button
-                          type="button"
-                          onClick={toggleSignUpConfirmPasswordVisibility}
-                          className="toggle-password-btn"
-                        >
-                          <FontAwesomeIcon icon={showSignUpConfirmPassword ? faEyeSlash : faEye} />
-                        </button>
-                        <ReCAPTCHA
-                          sitekey="6LeZbckpAAAAAF29V1j_Rvg-4zv2SAbSuolJOKzp"
-                          onChange={onChange}
-                        />
+                      
+                       
                       </div>
                     </>
                   )}
