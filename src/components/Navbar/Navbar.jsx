@@ -79,8 +79,16 @@ const Navbar = ({ showSidebar }) => {
   return (
     <>
       <header>
+        {token &&
 
-        <ul className="games_filter">
+          <div className="join">
+            <div className="join_name" >Join Game</div>
+            <button className="torn_btn" onClick={openModal}>+</button>
+          </div>
+
+        }
+
+        
           <li>
             <div className="balance">
               <h6>Play929</h6>
@@ -90,7 +98,9 @@ const Navbar = ({ showSidebar }) => {
               )}
             </div>
           </li>
-        </ul>
+        
+
+
 
         {token &&
 
@@ -98,6 +108,7 @@ const Navbar = ({ showSidebar }) => {
             <div className="torn_name" >Create Game</div>
             <button className="torn_btn" onClick={openModal}>+</button>
           </div>
+
         }
       </header>
       {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} selectedGame={selectedGame} />}
