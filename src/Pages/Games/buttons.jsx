@@ -11,6 +11,12 @@ const ModalOfButtons = ({ onClose, onSelect }) => {
          className="form_btn"
         >Chess
         </button>
+        <button onClick={() => onSelect('Word Search')}
+        className={`form_btn ${isUnavailable ? "disabled" : ""}`}
+         disabled={isUnavailable}
+        aria-busy={isUnavailable}>
+          Word Search
+        </button>
         <button onClick={() => onSelect('Ludo')}
         className={`form_btn ${isUnavailable ? "disabled" : ""}`}
          disabled={isUnavailable}

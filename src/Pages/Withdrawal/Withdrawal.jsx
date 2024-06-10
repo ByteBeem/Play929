@@ -175,7 +175,7 @@ function Withdraw({ showSidebar, active, closeSidebar }) {
         },
       })
       .then((response) => {
-        setMessage(`Withdrawal successful. New balance: R ${response.data.newBalance}`);
+        setMessage(`Withdrawal successful , Check Your Email. New balance: R ${response.data.newBalance}`);
         setFormData({ amount: "", account: "", bank: "", password: "", email: "" });
       })
       .catch((error) => {

@@ -17,7 +17,8 @@ class Home extends Component {
       loading: false,
       betAmountInput: "",
       userEmail: "",
-      maxContainerHeight: window.innerHeight - 100
+      maxContainerHeight: window.innerHeight - 100,
+      isSidebarOpen: false
     };
 
     this.token = localStorage.getItem('token');
@@ -95,9 +96,16 @@ class Home extends Component {
 
   };
 
+  toggleSidebar = () => {
+    this.setState((prevState) => ({
+      isSidebarOpen: !prevState.isSidebarOpen
+    }));
+  };
+
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
     const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, loading } = this.state;
+    const { isSidebarOpen } = this.state;
 
 
     return (
@@ -147,7 +155,13 @@ class Home extends Component {
           </div>
         </div>
         {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => this.setState({ errorModalOpen: false })} />}
+        <footer className={`footer ${isSidebarOpen ? "above-sidebar" : ""}`}>
+          <p>At our platform, your safety is our top priority. We specialize in skill-based betting, ensuring a secure and fair environment where your skills truly make the difference. Bet smart, stay safe, and enjoy the game with us!</p>
+        </footer>
+
+
       </div>
+
     );
   }
 }

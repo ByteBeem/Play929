@@ -246,4 +246,38 @@
   }
 }
 }
+
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #555;
+  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  p {
+    margin: 0;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 12px; 
+    padding: 10px; 
+    bottom: 90px;
+
+    &.above-sidebar {
+      bottom: unset;
+      top: 0;
+    }
+  }
+}
+
+
 }
