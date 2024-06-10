@@ -156,7 +156,7 @@ class Home extends Component {
         </div>
         {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => this.setState({ errorModalOpen: false })} />}
         <footer className={`footer ${isSidebarOpen ? "above-sidebar" : ""}`}>
-          <p>At our platform, your safety is our top priority. We specialize in skill-based betting, ensuring a secure and fair environment where your skills truly make the difference. Bet smart, stay safe, and enjoy the game with us!</p>
+          <p>At our platform, your safety is our top priority. We specialize in skill-based betting, ensuring a secure and fair environment where your skills truly make the difference. Bet smart!</p>
         </footer>
 
 
