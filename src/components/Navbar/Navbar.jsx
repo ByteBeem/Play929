@@ -5,6 +5,7 @@ import Create from "../../Pages/Games/create";
 import ModalOfButtons from "../../Pages/Games/buttons";
 import Error from "../../Pages/ErrorModal/ErrorModal";
 import "./Navbar.scss";
+import Join from "./Join";
 
 const Navbar = ({ showSidebar }) => {
   const [userData, setUserData] = useState({});
@@ -16,6 +17,15 @@ const Navbar = ({ showSidebar }) => {
   const [selectedGame, setSelectedGame] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem("token");
+  const [isJoinModalOpen, setJoinModalOpen] = useState(false);
+
+  const JoinopenModal = () => {
+    setJoinModalOpen(true);
+  };
+
+  const JoincloseModal = () => {
+    setJoinModalOpen(false);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -83,7 +93,7 @@ const Navbar = ({ showSidebar }) => {
 
           <div className="join">
             <div className="join_name" >Join Game</div>
-            <button className="torn_btn" onClick={openModal}>+</button>
+            <button className="torn_btn" onClick={JoinopenModal}>+</button>
           </div>
 
         }
@@ -120,6 +130,7 @@ const Navbar = ({ showSidebar }) => {
       )}
       {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
       {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)} />}
+      <Join isOpen={isJoinModalOpen} onClose={JoincloseModal} />
     </>
   );
 };
