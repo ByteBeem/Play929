@@ -83,13 +83,29 @@ const Login = ({ isOpen, onClose }) => {
   const handleSubmitSignUp = async (e) => {
     setErrorSignUpMessage("");
     e.preventDefault();
-    const { full, surname, country, email, password } = signUpFormData;
+    const { full, surname, country, email, password  , confirmPassword} = signUpFormData;
 
     if (!validateEmail(email)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         email: "Invalid email",
       }));
+      return;
+    }
+
+    if(!validatePassword(password)){
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "password must have more than 8 characters."
+      }))
+      return;
+    }
+
+    if(confirmPassword != password){
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Password do not match."
+      }))
       return;
     }
 
@@ -211,8 +227,6 @@ const Login = ({ isOpen, onClose }) => {
 
     setIsLoading(false);
   };
-
-
 
   const handleForgotPasswordClick = () => {
     setShowForgotPassword(true);
@@ -458,7 +472,7 @@ const Login = ({ isOpen, onClose }) => {
                           required
                         />
                       
-                       
+                      {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                       </div>
                     </>
                   )}

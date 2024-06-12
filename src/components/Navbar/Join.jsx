@@ -16,8 +16,8 @@ const Modal = ({ isOpen, onClose }) => {
 
   const handleJoinClick = () => {
     console.log(`Joining game with ID: ${gameId}`);
-    // Add your logic for joining the game here
-    onClose(); // Close the modal after the action
+    
+    onClose(); 
   };
 
   if (!isOpen) {

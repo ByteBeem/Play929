@@ -27,8 +27,8 @@ const ModalOfButtons = ({ onClose, onSelect }) => {
         disabled={isUnavailable}
         aria-busy={isUnavailable}
         className={`form_btn ${isUnavailable ? "disabled" : ""}`}
-        >Soccer</button>
-        <button onClick={onClose}>Close</button>
+        >Penalty Shootout</button>
+        <button className="close-button" onClick={onClose}>Close</button>
       </div>
     </div>
   );
