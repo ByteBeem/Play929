@@ -4,7 +4,7 @@ import Auth from "../Login/Auth";
 import axios from "axios";
 import "./create.scss";
 
-const Create = ({ isOpen, onClose  , selectedGame}) => {
+const Create = ({ isOpen, onClose  , selectedGame = "Chess"}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

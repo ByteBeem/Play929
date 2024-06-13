@@ -8,6 +8,7 @@ import word from "../../assets/word.jpg";
 import chess from "../../assets/chess.png";
 import shootout from "../../assets/shootout.jpg";
 import cup from "../../assets/cup.jpg";
+import Create from "../Games/create";
 
 class Home extends Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class Home extends Component {
       loading: false,
       userEmail: "",
       maxContainerHeight: window.innerHeight - 100,
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      isCreateOpen:false
     };
 
     this.token = localStorage.getItem('token');
@@ -67,12 +69,14 @@ class Home extends Component {
   };
 
   handlePlay = (gameName) => {
-    console.log(`Playing ${gameName}...`);
+    if(gameName === "Chess"){
+      this.setState({isCreateOpen : true});
+    }
   };
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, loading } = this.state;
+    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen } = this.state;
 
     return (
       <div className="home">
@@ -105,6 +109,7 @@ class Home extends Component {
           </div>
         </div>
         {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => this.setState({ errorModalOpen: false })} />}
+        {isCreateOpen && <Create isOpen={isCreateOpen} onClose={() => this.setState({ isCreateOpen: false })} />}
       </div>
     );
   }
