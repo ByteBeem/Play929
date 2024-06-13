@@ -19,26 +19,30 @@ class Home extends Component {
       errorMessage: "",
       errorModalOpen: false,
       prevGames: [
-        { name: 'Chess', image: chess, minimum: 'R10' },
-        { name: 'Word Search', image: word, minimum: 'R10' },
-        { name: 'Cup Guess', image: cup, minimum: 'R10' },
-        { name: 'Penalty Shootout', image: shootout, minimum: 'R10' },
+        { name: 'Chess', image: chess, minimum: '10' },
+        { name: 'Word Search', image: word, minimum: '10' },
+        { name: 'Cup Guess', image: cup, minimum: '2' },
+        { name: 'Penalty Shootout', image: shootout, minimum: '5' },
       ],
       loading: false,
       userEmail: "",
       maxContainerHeight: window.innerHeight - 100,
       isSidebarOpen: false,
       isCreateOpen:false,
-      isWordOpen:false
+      isWordOpen:false,
+      country : ""
     };
 
     this.token = localStorage.getItem('token');
+    this.country = localStorage.getItem("country");
+    
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     if (this.token) {
       this.fetchUserEmail();
+      
     }
   }
 
@@ -80,6 +84,11 @@ class Home extends Component {
     }
   };
 
+  getCurrencySymbol = () => {
+    const symbol = this.country === 'ZA' ? 'R' : '$';
+    return symbol;
+  };
+
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
     const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen , isWordOpen} = this.state;
@@ -99,7 +108,7 @@ class Home extends Component {
                         <img src={game.image} alt={`${game.name} image`} />
                         <div className="tournament_info">
                           <h3>{game.name}</h3>
-                          <p>Minimum: {game.minimum}</p>
+                          <p>Minimum: {this.getCurrencySymbol()}{game.minimum}</p>
                           <button className="play-button" onClick={() => this.handlePlay(game.name)}>Play</button>
                         </div>
                       </div>
