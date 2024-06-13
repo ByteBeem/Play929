@@ -89,37 +89,28 @@ const Navbar = ({ showSidebar }) => {
   return (
     <>
       <header>
-        {token &&
-
-          <div className="join">
-            <div className="join_name" >Join Game</div>
-            <button className="torn_btn" onClick={JoinopenModal}>+</button>
-          </div>
-
-        }
-
+       
         
           <li>
             <div className="balance">
-              <h6>Play929</h6>
+              <h6>Balance</h6>
               {loading ? "Loading..." : (
                 userData.balance ? `${getCurrencySymbol()}${userData.balance}` :
                   <button className="form_btn" onClick={() => setLoginModalOpen(true)}>Login</button>
               )}
             </div>
           </li>
-        
 
+          {token &&
 
+<div className="join">
+  <div className="join_name" >Join Game</div>
+  <button className="torn_btn" onClick={JoinopenModal}>+</button>
+</div>
 
-        {token &&
+}
 
-          <div className="tournament">
-            <div className="torn_name" >Create Game</div>
-            <button className="torn_btn" onClick={openModal}>+</button>
-          </div>
-
-        }
+      
       </header>
       {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} selectedGame={selectedGame} />}
       {isModalOpen && (
