@@ -91,6 +91,14 @@ const Wallet = ({ showSidebar, active, closeSidebar }) => {
           <p>
             Disclaimer: We handle transactions with the utmost care and security. However, please be advised that all
             transactions are subject to verification and may be delayed or declined based on security protocols.
+
+            We do not store any of your banking information. Your financial details are handled directly by our secure payment partners.
+
+Your privacy and security are our top priorities. We adhere to strict data protection regulations and industry-standard security measures to safeguard your information.
+
+For any inquiries or assistance, please contact our customer support team at support@play929.com.
+
+© 2024 Play929. All rights reserved.
           </p>
         </div>
         {loginModalOpen && <Auth isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />}
