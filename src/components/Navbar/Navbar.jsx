@@ -89,28 +89,17 @@ const Navbar = ({ showSidebar }) => {
   return (
     <>
       <header>
-       
-        
-          <li>
-            <div className="balance">
-              
-              {loading ? "Loading..." : (
-                userData.balance ? `${getCurrencySymbol()}${userData.balance}` :
-                  <button className="form_btn" onClick={() => setLoginModalOpen(true)}>Login</button>
-              )}
-            </div>
-          </li>
 
-          {token &&
+        <li>
+          <div className="balance">
 
-<div className="join">
-  <div className="join_name" >Join Game</div>
-  <button className="torn_btn" onClick={JoinopenModal}>+</button>
-</div>
+            {loading ? "Loading..." : (
+              userData.balance ? `${getCurrencySymbol()}${userData.balance}` :
+                <button className="form_btn" onClick={() => setLoginModalOpen(true)}>Login</button>
+            )}
+          </div>
+        </li>
 
-}
-
-      
       </header>
       {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} selectedGame={selectedGame} />}
       {isModalOpen && (

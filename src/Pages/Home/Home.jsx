@@ -9,6 +9,7 @@ import chess from "../../assets/chess.png";
 import shootout from "../../assets/shootout.jpg";
 import cup from "../../assets/cup.jpg";
 import Create from "../Games/create";
+import Word from "../Games/Word";
 
 class Home extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class Home extends Component {
       userEmail: "",
       maxContainerHeight: window.innerHeight - 100,
       isSidebarOpen: false,
-      isCreateOpen:false
+      isCreateOpen:false,
+      isWordOpen:false
     };
 
     this.token = localStorage.getItem('token');
@@ -72,11 +74,15 @@ class Home extends Component {
     if(gameName === "Chess"){
       this.setState({isCreateOpen : true});
     }
+
+    if(gameName === "Word Search"){
+      this.setState({isWordOpen: true})
+    }
   };
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen } = this.state;
+    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen , isWordOpen} = this.state;
 
     return (
       <div className="home">
@@ -110,6 +116,7 @@ class Home extends Component {
         </div>
         {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => this.setState({ errorModalOpen: false })} />}
         {isCreateOpen && <Create isOpen={isCreateOpen} onClose={() => this.setState({ isCreateOpen: false })} />}
+        {isWordOpen && <Word isOpen={isWordOpen} onClose={() => this.setState({ isWordOpen: false })} />}
       </div>
     );
   }
