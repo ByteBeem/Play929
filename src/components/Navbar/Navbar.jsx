@@ -93,7 +93,7 @@ const Navbar = ({ showSidebar }) => {
         
           <li>
             <div className="balance">
-              <h6>Balance</h6>
+              
               {loading ? "Loading..." : (
                 userData.balance ? `${getCurrencySymbol()}${userData.balance}` :
                   <button className="form_btn" onClick={() => setLoginModalOpen(true)}>Login</button>

@@ -23,7 +23,6 @@ class Home extends Component {
         { name: 'Penalty Shootout', image: shootout, minimum: 'R10' },
       ],
       loading: false,
-      betAmountInput: "",
       userEmail: "",
       maxContainerHeight: window.innerHeight - 100,
       isSidebarOpen: false
@@ -34,7 +33,9 @@ class Home extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    this.fetchUserEmail();
+    if (this.token) {
+      this.fetchUserEmail();
+    }
   }
 
   componentWillUnmount() {
@@ -46,9 +47,6 @@ class Home extends Component {
   }
 
   fetchUserEmail = async () => {
-    if (!this.token) {
-      return;
-    }
     this.setState({ loading: true });
 
     try {
@@ -60,7 +58,6 @@ class Home extends Component {
 
       if (response.status === 200) {
         const userEmail = response.data.userEmail;
-        console.log(userEmail);
         localStorage.setItem('userEmail', userEmail);
         this.setState({ userEmail, loading: false });
       }
@@ -73,16 +70,9 @@ class Home extends Component {
     console.log(`Playing ${gameName}...`);
   };
 
-  toggleSidebar = () => {
-    this.setState((prevState) => ({
-      isSidebarOpen: !prevState.isSidebarOpen
-    }));
-  };
-
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
     const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, loading } = this.state;
-    const { isSidebarOpen } = this.state;
 
     return (
       <div className="home">
@@ -93,7 +83,7 @@ class Home extends Component {
             <div className="games_slider">
               <div className="scrollview" style={{ maxHeight: maxContainerHeight }}>
                 <div className="card_container">
-                  {prevGames.length > 0 ? (
+                  {this.token ? (
                     prevGames.map((game, index) => (
                       <div key={index} className="card">
                         <img src={game.image} alt={`${game.name} image`} />
@@ -105,24 +95,16 @@ class Home extends Component {
                       </div>
                     ))
                   ) : (
-                    this.token && loading && (
-                      <div className="no-games-message">
-                        <p>Loading...</p>
-                      </div>
-                    )
-                  )}
-                  {!this.token && !loading &&
                     <div className="no-games-message">
                       <p>No games found, Please Login.</p>
                     </div>
-                  }
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
         {errorModalOpen && <Error errorMessage={errorMessage} isOpen={errorModalOpen} onClose={() => this.setState({ errorModalOpen: false })} />}
-        
       </div>
     );
   }
