@@ -99,6 +99,13 @@ const Navbar = ({ showSidebar }) => {
             )}
           </div>
         </li>
+        
+        <li>
+          <div className="acc">
+            <h6>Acc no</h6>
+            <p>{loading ? "Loading..." : userData.balance ? `${userData.acc || 12345236}` : ""}</p>
+          </div>
+        </li>
 
       </header>
       {createModalOpen && <Create isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} selectedGame={selectedGame} />}
