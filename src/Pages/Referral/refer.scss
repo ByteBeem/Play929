@@ -1,0 +1,94 @@
+.modal-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.514);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  
+    
+    @media (max-width: 576px) {
+      width: 90%;
+      margin: auto;
+      border-radius: 8px;
+    }
+  }
+  
+  .modal-header {
+    border-bottom: none;
+    padding: 1rem;
+  }
+  
+  .modal-title {
+    font-size: 1.25rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .modal-footer {
+    border-top: none;
+    padding: 1rem;
+  }
+  
+  .btn-primary {
+    width: 100%; 
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    transition: var(--transition);
+    cursor: pointer;
+  
+    @media (min-width: 576px) {
+      width: 80%; 
+      margin: auto; 
+    }
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .btn-outline-secondary:hover {
+    color: #495057;
+    border-color: #6c757d;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  .input-group-prepend {
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+  
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  @media (max-width: 576px) {
+    .modal-content {
+      border-radius: 8px; 
+    }
+  }
+  

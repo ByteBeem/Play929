@@ -9,6 +9,7 @@ import Error from "../ErrorModal/ErrorModal";
 import Auth from "../Login/Auth";
 import { Link } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
+import Refer from "../Referral/refer";
 
 
 function Profile({ showSidebar, active, closeSidebar }) {
@@ -109,7 +110,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
               <span>Surname:</span>
               <div className="text_item">{surname}</div>
 
-              <button className="refer_btn">Referal</button>
+              <Refer />
             </div>
           </div>
         </div>
