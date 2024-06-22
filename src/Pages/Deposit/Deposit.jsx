@@ -96,7 +96,7 @@ class Deposit extends Component {
                 {this.countryCode === "ZA" ? (
                   <>
                     <h2>
-                      <b>Payfast Method :</b>{" "}
+                      <b>Safe and Secure :</b>{" "}
                     </h2>
                     <div>
                       <label>Deposit Amount</label>

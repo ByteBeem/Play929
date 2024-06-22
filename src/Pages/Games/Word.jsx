@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose }) => {
   
     try {
       const response = await axios.post( 
-        "https://play929-1e88617fc658.herokuapp.com/games/JoinGame",
+        "http://localhost:3001/games/word-search",
         {
             bet: bet 
         },

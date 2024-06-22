@@ -117,6 +117,10 @@ function Profile({ showSidebar, active, closeSidebar }) {
         <Link className="form_btn" to="/reset">
           Change Password
         </Link>
+
+        <Link className="form_btn_delete" to="/reset">
+          Delete account
+        </Link>
         <div className="activity_table">
           <table>
             <thead>

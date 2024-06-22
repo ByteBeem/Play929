@@ -14,38 +14,40 @@
     justify-content: center;
     z-index: 1000;
   }
+
   .activity_table {
     margin-top: 20px;
-    
-      max-height: 400px; 
-      overflow-y: auto; 
-    
-    
+
+    max-height: 400px;
+    overflow-y: auto;
+
+
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
   }
-  
-  th, td {
+
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
   }
-  
+
   th {
     background-color: #f2f2f2;
   }
-  
+
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
-  
+
   tr:hover {
     background-color: #ddd;
   }
-  
+
 
   .loading-spinner {
     font-size: 2em;
@@ -96,12 +98,13 @@
           img {
             width: 10rem;
           }
-          
+
         }
       }
+
       .profile_pic {
         position: relative;
-  
+
         .verification {
           position: absolute;
           bottom: 40px;
@@ -110,7 +113,7 @@
           display: flex;
           padding-top: 50px;
           align-items: center;
-  
+
           .red-dot {
             width: 10px;
             height: 10px;
@@ -119,14 +122,14 @@
             border-radius: 50%;
             margin-right: 5px;
           }
-  
+
           span {
             color: red;
             font-size: 12px;
             margin-right: 5px;
           }
-  
-         
+
+
         }
       }
 
@@ -153,21 +156,16 @@
           margin-bottom: 2rem;
         }
 
-        
+
 
         .form_btn {
           text-decoration: none;
           text-align: center;
           margin-bottom: 7px;
         }
-.form_btn_delete {
-  text-decoration: none;
-  text-align: center;
-  color:red;
-  margin-bottom: 7px;
-  display: flex;
-  justify-content: flex-end; 
-}
+
+       
+
 
       }
     }
@@ -178,12 +176,14 @@
       margin: 0 2rem 1rem 2rem;
     }
 
+   
     .form_btn_delete {
       text-decoration: none;
       padding: 0.6rem;
       margin: 0 2rem 1rem 2rem;
     }
 
+   
     .activity {
       padding: 2rem;
       background: var(--white);
@@ -212,12 +212,14 @@
 
         tbody {
           tr {
+
             // &.success {
             //   background: rgba(0, 255, 0, 0.452);
             // }
             &.fail {
               background: rgba(255, 0, 0, 0.452);
             }
+
             td {
               &#title {
                 width: 20%;
@@ -226,12 +228,14 @@
                 font-weight: bold;
                 border-radius: 5px 0 0 5px;
               }
+
               &#body {
                 width: 60%;
                 padding: 1rem 2rem;
                 font-size: 15px;
                 color: rgb(60, 59, 59);
               }
+
               &#time {
                 width: 20%;
                 border-radius: 0 5px 5px 0;
@@ -244,9 +248,11 @@
                   width: 40%;
                   padding: 7px;
                 }
+
                 &#body {
                   width: 10%;
                 }
+
                 &#time {
                   width: 40%;
                 }
@@ -258,10 +264,12 @@
                   padding: 0.7rem;
                   font-size: 15px;
                 }
+
                 &#body {
                   width: 50%;
                   padding: 0.7rem;
                 }
+
                 &#time {
                   width: 40%;
                   padding: 0.7rem;
