@@ -29,6 +29,15 @@ body {
   cursor: pointer;
 }
 
+.refer_btn {
+  width: 80%;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
 .form_btn_delete {
   padding: 1rem 0;
   width: 100%;

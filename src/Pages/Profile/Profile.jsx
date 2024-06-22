@@ -109,7 +109,7 @@ function Profile({ showSidebar, active, closeSidebar }) {
               <span>Surname:</span>
               <div className="text_item">{surname}</div>
 
-
+              <button className="refer_btn">Referal</button>
             </div>
           </div>
         </div>
