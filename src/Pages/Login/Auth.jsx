@@ -4,7 +4,7 @@ import axios from "axios";
 import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
-import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname } from "../Validation/Validation";
+import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname , CheckIDNUmber } from "../Validation/Validation";
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {
@@ -20,6 +20,14 @@ const Login = ({ isOpen, onClose }) => {
   const [isModal2Open, setIsModal2Open] = useState(false);
   
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const [validationResult, setValidationResult] = useState(null);
+
+  const handleCheckID = () => {
+    const result = CheckIDNUmber(signUpFormData.ID);
+    setValidationResult(result);
+    console.log(validationResult)
+  };
   
 
   useEffect(() => {
@@ -41,6 +49,7 @@ const Login = ({ isOpen, onClose }) => {
     password: "",
     confirmPassword: "",
     country: "ZA",
+    ID : "",
   });
 
   const [section, setSection] = useState(1);
@@ -92,6 +101,10 @@ const Login = ({ isOpen, onClose }) => {
       }));
       return;
     }
+
+    handleCheckID();
+
+    
 
     if(!validatePassword(password)){
       setErrors((prevErrors) => ({
@@ -440,6 +453,18 @@ const Login = ({ isOpen, onClose }) => {
                             </option>
                           ))}
                         </select>
+                        <div className="input-group">
+                        <label htmlFor="email">ID number: </label>
+                        <input
+                          type="numeric"
+                          id="ID"
+                          name="ID"
+                          value={signUpFormData.ID}
+                          onChange={handleChangeSignUp}
+                          required
+                        />
+                        {errors.email && <p className="error-message">{errors.email}</p>}
+                      </div>
 
                         {errors.country && <p className="error-message">{errors.country}</p>}
                       </div>
@@ -474,6 +499,22 @@ const Login = ({ isOpen, onClose }) => {
                       
                       {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                       </div>
+                      <div>
+                      <label htmlFor="agreeToTerms">
+                        <input
+                          type="checkbox"
+                          id="agreeToTerms"
+                          name="agreeToTerms"
+                          checked={signUpFormData.agreeToTerms}
+                          onChange={handleChangeSignUp}
+                          required
+                        />
+                        I agree to the terms and conditions
+                      </label>
+                      {errors.agreeToTerms && (
+                        <p className="error-message">{errors.agreeToTerms}</p>
+                      )}
+                    </div>
                     </>
                   )}
 

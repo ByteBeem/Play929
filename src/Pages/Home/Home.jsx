@@ -92,11 +92,11 @@ class Home extends Component {
     const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen, isWordOpen } = this.state;
 
     const statuses = [
-      { label: "Friend 1", image: chess },
-      { label: "Friend 2", image: word },
-      { label: "Friend 3", image: shootout },
-      { label: "Friend 4", image: cup },
-      { label: "Friend 5", image: chess },
+      { label: "", image: chess },
+      { label: "", image: word },
+      { label: "", image: shootout },
+      { label: "", image: cup },
+      { label: "", image: chess },
     ];
 
     return (
