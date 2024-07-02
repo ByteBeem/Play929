@@ -729,7 +729,7 @@ const Login = ({ isOpen, onClose }) => {
                           onChange={handleChangeSignUp}
                           required
                         />
-                        {errors.email && <p className="error-message">{errors.email}</p>}
+                        {errors.ID && <p className="error-message">{errors.ID}</p>}
                       </div>
 
                         {errors.country && <p className="error-message">{errors.country}</p>}
@@ -769,8 +769,8 @@ const Login = ({ isOpen, onClose }) => {
                       <label htmlFor="agreeToTerms">
                         <input
                           type="checkbox"
-                          id="agreeToTerms"
-                          name="agreeToTerms"
+                          id="terms"
+                          name="terms"
                           checked={signUpFormData.terms}
                           onChange={handleChangeSignUp}
                           required
