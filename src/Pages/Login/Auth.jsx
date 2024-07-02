@@ -4,7 +4,7 @@ import axios from "axios";
 import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
-import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname , CheckIDNUmber } from "../Validation/Validation";
+import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname , CheckIDNumber } from "../Validation/Validation";
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {
@@ -24,7 +24,7 @@ const Login = ({ isOpen, onClose }) => {
   const [validationResult, setValidationResult] = useState(null);
 
   const handleCheckID = () => {
-    const result = CheckIDNUmber(signUpFormData.ID);
+    const result = CheckIDNumber(signUpFormData.ID);
     setValidationResult(result);
     console.log(validationResult)
   };
