@@ -35,14 +35,12 @@ class Home extends Component {
 
     this.token = localStorage.getItem('token');
     this.country = localStorage.getItem("country");
-    
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     if (this.token) {
       this.fetchUserEmail();
-      
     }
   }
 
@@ -80,7 +78,7 @@ class Home extends Component {
     }
 
     if(gameName === "Word Search"){
-      this.setState({isWordOpen: true})
+      this.setState({isWordOpen: true});
     }
   };
 
@@ -91,7 +89,15 @@ class Home extends Component {
 
   render() {
     const { showSidebar, active, closeSidebar } = this.props;
-    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen , isWordOpen} = this.state;
+    const { maxContainerHeight, errorModalOpen, errorMessage, prevGames, isCreateOpen, isWordOpen } = this.state;
+
+    const statuses = [
+      { label: "Friend 1", image: chess },
+      { label: "Friend 2", image: word },
+      { label: "Friend 3", image: shootout },
+      { label: "Friend 4", image: cup },
+      { label: "Friend 5", image: chess },
+    ];
 
     return (
       <div className="home">
@@ -99,6 +105,14 @@ class Home extends Component {
         <div className="home_container">
           <Navbar showSidebar={showSidebar} />
           <div className="content">
+            <div className="status-circles">
+              {statuses.map((status, index) => (
+                <div key={index} className="status-circle">
+                  <img src={status.image} alt={status.label} className="status-image" />
+                  <div className="status-label">{status.label}</div>
+                </div>
+              ))}
+            </div>
             <div className="games_slider">
               <div className="scrollview" style={{ maxHeight: maxContainerHeight }}>
                 <div className="card_container">
