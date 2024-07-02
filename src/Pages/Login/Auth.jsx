@@ -5,11 +5,11 @@ import moment from "moment";
 import Modal from "../CodeModal/modal";
 import Modal2 from "../CodeModal/Modal2";
 import { countries as countriesList } from "countries-list";
-import { validateRequired, validateEmail, validatePassword, validateMatch, validateSurname } from "../Validation/Validation";
+import { validateRequired, validateEmail } from "../Validation/Validation";
 import "./Login.scss";
 
 const Login = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ ID: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,7 +37,7 @@ const Login = ({ isOpen, onClose }) => {
   useEffect(() => {
         setIsButtonDisabled(
           errorMessage ||
-            !formData.email ||
+            !formData.ID ||
             !formData.password
         );
     }, [errorMessage, formData.email ,formData.password]);
@@ -398,6 +398,8 @@ const Login = ({ isOpen, onClose }) => {
         country,
         email,
         password,
+        ID,
+        terms
       });
 
       if (response.status === 200) {
@@ -411,6 +413,8 @@ const Login = ({ isOpen, onClose }) => {
           password: "",
           confirmPassword: "",
           country: "ZA",
+          ID,
+          terms:false
         });
         setIsLoading(false);
         setErrorMessage("");
@@ -449,14 +453,14 @@ const Login = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     setErrorMessage("");
     e.preventDefault();
-    const { email, password } = formData;
+    const { ID, password } = formData;
 
 
-    if (!validateRequired(email)) {
+    if (!validateRequired(ID)) {
 
       setErrors((prevErrors) => ({
         ...prevErrors,
-        email: "Email is Required",
+        ID: "ID number is Required",
       }));
       return;
 
@@ -472,10 +476,10 @@ const Login = ({ isOpen, onClose }) => {
 
     }
 
-    if (!validateEmail(email)) {
+    if (!validateID(ID)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        email: "Invalid email",
+        ID: "Invalid ID number",
       }));
       return;
     };
@@ -485,7 +489,7 @@ const Login = ({ isOpen, onClose }) => {
 
     try {
       const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/login", {
-        email,
+        ID,
         password,
        
       });
@@ -589,17 +593,17 @@ const Login = ({ isOpen, onClose }) => {
             {!showForgotPassword && !showSignUp ? (
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">ID number</label>
                   <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="numeric"
+                    id="ID"
+                    name="ID"
+                    value={formData.ID}
                     onChange={handleChange}
                     required
-                    className={errors.email ? "error-input" : "valid-input"}
+                    className={errors.ID ? "error-input" : "valid-input"}
                   />
-                  {errors.email && <p className="error-message">{errors.email}</p>}
+                  {errors.ID && <p className="error-message">{errors.ID}</p>}
                 </div>
                 <label htmlFor="password">Password</label>
                 <div className="password-input-container">
