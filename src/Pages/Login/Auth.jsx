@@ -392,7 +392,7 @@ const Login = ({ isOpen, onClose }) => {
     localStorage.setItem("email", email);
 
     try {
-      const response = await axios.post("https://play929-1e88617fc658.herokuapp.com/auth/signup", {
+      const response = await axios.post("https://play929.azurewebsites.net/auth/signup", {
         full,
         surname,
         country,
